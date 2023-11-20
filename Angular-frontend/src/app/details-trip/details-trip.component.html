@@ -1,0 +1,72 @@
+<ng-container *ngIf="trip$ | async as trip">
+<div class="container">
+  <h1 class="mb-4 mt-4">Details trip</h1>
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Naam</th>
+            <td>{{trip.name}}</td>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <td>{{trip.tripType.name}}</td>
+          </tr>
+          <tr >
+            <th>Locaties</th>
+            <td><ul >
+              <li *ngFor="let country of trip.countries">{{country.name}}</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <th>Vertrek Datum</th>
+            <td>{{trip.departDate | date}}</td>
+          </tr>
+          <tr>
+            <th>Eind Datum</th>
+            <td>{{trip.returnDate | date}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- TODO buttons visibility veranderen als user niet eigenaar van trip is -->
+      <div class="d-flex justify-content-around">
+        <a (click)="back()" class="btn btn-outline-secondary mr-3"><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
+        <a class="btn btn-outline-secondary">Bewerk trip</a>
+        <a class="btn btn-outline-secondary">
+          Deelnemer uitnodigen
+        </a>
+      </div>
+    </div>
+<hr class="mr-3 ml-3">
+    <div class="col">
+      <h3>Overzicht activiteiten</h3>
+      <div class="dropdown d-flex justify-content-end">
+        <a
+          class="btn btn-outline-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          ActiviteitenType
+      </a>
+      <!-- TODO momenteel toont hij elke activiteit zen type ipv de types van de activiteiten die anders zijn zodat je erop kan filteren -->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" *ngFor="let activity of trip.activities">{{activity.activityType}}</a>
+        </div>
+      </div>
+      <div>
+        <ul class="m-4">
+          <li *ngFor="let activity of trip.activities"><a href="#">{{activity.name}}</a></li>
+        </ul>
+      </div>
+      <div>
+        <a class="btn btn-outline-secondary mt-3 ml-4 mb-2"><i class="fa-solid fa-plus"></i> Toevoegen</a>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>
+<!-- <pre>{{ trip$ | async | json}}</pre> -->

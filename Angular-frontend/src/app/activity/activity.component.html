@@ -1,0 +1,82 @@
+<h2 class="mx-5 mt-3">Activiteiten toevoegen</h2>
+<form class="m-5">
+    <div class="form-group">
+        <label for="naam">Naam</label>
+        <input type="text" id="naam" name="naam" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="naam">Activiteit type</label>
+        <select id="activiteitType" name="activiteitType" class="form-control" required>
+            <option value="" disabled selected>Selecteer een activiteitstype</option>
+            <option value="optie1">Type 1</option>
+        </select>
+            <!-- <input type="text" id="activiteitType" name="activiteitType" class="form-control"
+            required> -->
+    </div>
+    <div class="form-group">
+        <label for="afstand">Begintijd</label>
+        <input type="datetime-local" id="begintijd" name="begintijd" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="afstand">Eindtijd</label>
+        <input type="datetime-local" id="eindtijd" name="eindtijd" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="afstand">Aantal Personen</label>
+        <input type="number" id="aantalPersonen" name="aantalPersonen" class="form-control" min="0">
+    </div>
+    <div class="form-group">
+        <label for="vervoersmiddel">Vervoersmiddel</label>
+        <input type="text" id="vervoersmiddel" name="vervoersmiddel" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="gemeente">Gemeente</label>
+        <input type="text" id="gemeente" name="gemeente" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="gemeente">Postcode</label>
+        <input type="text" id="postcode" name="postcode" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="gemeente">Straat naam en straat nummer</label>
+        <input type="text" id="straat" name="straat" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="landen">Land</label>
+        <select id="landen" name="landen" class="form-control" required>
+            <option value="" disabled selected>Selecteer een land</option>
+            <option value="optie1">Type 1</option>
+        </select>
+    </div>
+    
+    <!-- Land dropdown menu , meerdere landen kunnen selecteren -->
+    <div class="form-group">
+        <label for="afstand">Afstand (km)</label>
+        <input type="number" id="afstand" name="afstand" class="form-control" min="0">
+    </div>
+    <!-- <div class="form-group">
+        <label for="afstand">Prijs</label>
+        <input type="number" id="prijs" name="prijs" class="form-control" min="0">
+    </div> -->
+    <div  class="form-group">
+        <label for="activiteitPrijs" class="form-label">Prijs</label>
+      
+        <div class="input-group mb-3">
+      
+          <div class="input-group-prepend">
+            <span class="input-group-text">€</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Prijs activiteit">
+        </div>
+      </div>
+    <div class="form-group">
+        <label for="bestanden">Uploaden bestanden</label>
+        <input type="file" class="form-control-file" id="bestanden" multiple>
+    </div>
+    <div class="form-group">
+        <label for="opmerkingen">Opmerkingen</label>
+        <textarea class="form-control" id="opmerkingen" rows="4"></textarea>
+    </div>
+    
+    <button type="submit" id="buttonToevoegen" class="btn btn-success float-right">Toevoegen</button>
+</form>

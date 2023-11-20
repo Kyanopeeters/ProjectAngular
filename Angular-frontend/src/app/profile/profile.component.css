@@ -1,0 +1,15 @@
+.profiel{
+    border: 1.5px solid #4e7779;
+    color: #4e7779; 
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: white;
+}
+.profiel:hover{
+    background-color: #4e7779;
+    color: white; 
+}
+label{
+    font-family: 'Heebo', serif;
+    font-size: medium;
+}

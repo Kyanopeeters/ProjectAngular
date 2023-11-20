@@ -1,0 +1,19 @@
+a, button {
+    font-size: larger;
+    font-weight: 600;
+    font-family: 'Sanchez', serif;
+}
+#logo{
+    font-size: x-large;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+}
+nav a.active {
+    color: white;
+}
+.dd-item{
+    font-size: large;
+    font-weight: 400;
+}
+.nav{
+    background-color: #829b8f;
+}

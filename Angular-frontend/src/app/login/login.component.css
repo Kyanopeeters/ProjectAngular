@@ -1,0 +1,9 @@
+a {
+    font-size: larger;
+    font-weight: 600;
+    font-family: 'Sanchez', serif;
+}
+
+a.active {
+    color: white;
+}

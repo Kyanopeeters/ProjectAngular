@@ -1,0 +1,29 @@
+/* For small screen */
+@media (max-width: 900px) {
+    label, input, select, textarea {
+        display: block;
+        width: 100%;
+    }
+    #buttonToevoegen{
+        margin-bottom: 20px;
+    }
+}
+
+/* for large screen */
+@media (min-width: 900px) {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    /* The 20px is the distance between two input fields */
+    /* 50% stands for how many colomns -> so 2 columns */
+    .form-group {
+        flex-basis: calc(50% - 20px); 
+    }
+    /* On large screen, the button will need a max-width and max-height */
+    #buttonToevoegen{
+        max-width: 250px; 
+        max-height: 40px; 
+    }
+}

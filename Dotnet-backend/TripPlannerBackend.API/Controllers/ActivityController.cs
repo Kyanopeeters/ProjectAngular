@@ -41,7 +41,7 @@ namespace TripPlannerBackend.API.Controllers
             return _mapper.Map<List<GetActivityTypesDto>>(activityTypes);
         }
 
-        //Get By ID
+        //Get activity By ID
         [HttpGet("{id}")]
         //[Authorize]
         //[Authorize(Policy = "TripReadAccess")]
@@ -60,8 +60,8 @@ namespace TripPlannerBackend.API.Controllers
             return _mapper.Map<GetActivityDto>(activity);
         }
 
-
-        [HttpPost]
+        // Create an activity
+        [HttpPost("create")]
         //[Authorize]
         //[Authorize(Policy = "TripWriteAccess")]
         public async Task<ActionResult<GetActivityDto>> AddActivity(CreateActivityDto activity)

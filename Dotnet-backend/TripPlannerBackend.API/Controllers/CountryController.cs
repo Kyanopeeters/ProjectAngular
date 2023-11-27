@@ -28,7 +28,6 @@ namespace TripPlannerBackend.API.Controllers
 
         // Get ALL countries
         [HttpGet]
-
         public async Task<ActionResult<List<GetCountryDto>>> getCountries()
         {
             var countries = await _context.Countries.ToListAsync();

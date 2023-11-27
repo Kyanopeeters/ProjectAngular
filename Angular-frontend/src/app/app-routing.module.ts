@@ -9,7 +9,6 @@ import { ActivityComponent } from './activity/activity.component';
 import { DetailsTripComponent } from './details-trip/details-trip.component';
 import { PublicTripsComponent } from './public-trips/public-trips.component';
 import { ProfileComponent } from './profile/profile.component';
-import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from '@auth0/auth0-angular';

@@ -6,6 +6,7 @@ namespace TripPlannerBackend.API.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string UserId { get; set; }
         public GetTripTypesDto TripType { get; set; }
 
         public DateTime DepartDate { get; set; }
@@ -13,7 +14,7 @@ namespace TripPlannerBackend.API.Dto
         public DateTime ReturnDate { get; set; }
         public bool IsPublic { get; set; }
 
-        public IEnumerable<GetTripCountryDto> Countries { get; set; }
+        public IEnumerable<GetTripCountryDto> TripCountries { get; set; }
 
         public IEnumerable<GetActivityDto>? Activities { get; set; }
 

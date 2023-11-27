@@ -3,6 +3,7 @@
     public class CreateTripDto
     {
         public string Name { get; set; }
+        public string UserId { get; set; }
         public int TripTypeId { get; set; }
         public DateTime DepartDate { get; set; }
         public DateTime ReturnDate { get; set; }

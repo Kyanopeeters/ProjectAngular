@@ -1,7 +1,8 @@
-export interface Activiteit {
-    id: number,
+export interface ActivityForm {
     name: string, 
+    tripId: number,
     startTime: Date,
+    endTime: Date,
     transportType: string,
     city: string,
     postalCode: string,
@@ -9,6 +10,7 @@ export interface Activiteit {
     streetNr: string,
     price: string,
     distance: string,
-    comment: string
+    comment: string,
+    activityTypeId: number
 
 }

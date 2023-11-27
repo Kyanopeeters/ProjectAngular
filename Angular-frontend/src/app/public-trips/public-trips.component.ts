@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./public-trips.component.css']
 })
 export class PublicTripsComponent {
-  trips$ : Observable<Trip[]>
-  = new Observable<Trip[]>();
+  trips$ : Observable<Trip[]> = new Observable<Trip[]>();
 
   constructor(private tripService: TripService, private router : Router) {}
 

@@ -22,8 +22,7 @@ namespace TripPlannerBackend.DAL.Entity
         public ICollection<TripCountry> TripCountries { get; set; } = new List<TripCountry>();
 
         public TripType TripType { get; set; }
-        //public ICollection<Activiteit>? Activiteiten { get; set; }
-        //public ICollection<TripLocatie> TripLocaties { get; set; }
+
 
     }
 }

@@ -16,10 +16,30 @@ export class MyTripsComponent {
   constructor(private tripService: TripService, private router : Router) { }
 
   ngOnInit(): void {
-    this.trips$ =  this.tripService.getMyTrips();
+    this.getAllMyTrips();
 }
+  getAllMyTrips()
+  {
+    this.trips$ =  this.tripService.getMyTrips();
+  }
 
   detail(id : number) {
     this.router.navigate(['/trip', id]);
   }
+  
+  deleteTrip(id: number) {
+    if (confirm('Weet je zeker dat je deze trip wilt verwijderen?')) {
+      this.tripService.deleteTrip(id).subscribe(
+        response => {
+          console.log('Server response:', response);
+          console.log('Trip has been successfully deleted!');
+          this.getAllMyTrips();
+        },
+        error => {
+          console.error('Trip deletion error:', error);
+        }
+      );
+    }
+  }
+  
 }

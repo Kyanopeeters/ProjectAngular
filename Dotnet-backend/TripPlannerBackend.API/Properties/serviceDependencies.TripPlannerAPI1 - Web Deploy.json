@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "apis1": {
+      "apiEndpoint": "https://tripplannerbackendapiapi.azure-api.net/httpbin",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/TripPlannerBackendAPIapi/apis/tripplannerbackendapi2",
+      "type": "apis.azure"
+    }
+  }
+}

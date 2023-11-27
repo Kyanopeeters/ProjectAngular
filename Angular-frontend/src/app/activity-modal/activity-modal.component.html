@@ -1,0 +1,234 @@
+<!-- modal -->
+<div
+  class="modal fade"
+  id="activityModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="ModalLabel"
+  aria-hidden="true"
+  #activityModal
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Activiteit toevoegen</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- content -->
+        <form #activityForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="mt-4">
+              <div class="form-row">
+                <div class="form-group m-2 pl-2 col-5">
+                  <label for="activiteitNaam">Naam</label>
+                  <input
+                    type="text"
+                    id="activiteitNaam"
+                    name="activiteitNaam"
+                    class="form-control"
+                    [(ngModel)]="activity.name"
+                    #name="ngModel"
+                    name="name"
+                    required
+                  />
+                </div>
+                <div
+                  class="form-group m-2 pl-2 col-5"
+                  *ngIf="tripActivityType$ | async as activityType"
+                >
+                  <label for="naam">Activiteit type</label>
+                  <select
+                    id="typeActiviteit"
+                    name="typeActiviteit"
+                    class="form-control"
+                    [(ngModel)]="activity.activityTypeId"
+                    #activityTypeId="ngModel"
+                    name="activityTypeId"
+                    required
+                  >
+                    <option selected disabled>
+                      Selecteer een activiteitstype
+                    </option>
+                    <option
+                      *ngFor="let type of activityType"
+                      [value]="type.id"
+                    >
+                      {{ type.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group m-2 pl-2 col-5">
+                  <label for="activiteitBegintijd">Begintijd</label>
+                  <input
+                    type="datetime-local"
+                    id="activiteitBegintijd"
+                    name="activiteitBegintijd"
+                    class="form-control"
+                    [(ngModel)]="activity.startTime"
+                    #startTime="ngModel"
+                    name="startTime"
+                  />
+                </div>
+                <div class="form-group m-2 pl-2 col-5">
+                  <label for="activiteitEindtijd">Eindtijd</label>
+                  <input
+                    type="datetime-local"
+                    id="activiteitEindtijd"
+                    name="activiteitEindtijd"
+                    class="form-control"
+                    [(ngModel)]="activity.endTime"
+                    #endTime="ngModel"
+                    name="endTime"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group m-2 pl-2 col-5">
+                  <label for="activiteitGemeente">Gemeente</label>
+                  <input
+                    type="text"
+                    id="activiteitGemeente"
+                    name="activiteitGemeente"
+                    class="form-control"
+                    [(ngModel)]="activity.city"
+                    #city="ngModel"
+                    name="city"
+                  />
+                </div>
+                <div class="form-group m-2 pl-2 col-5">
+                  <label for="activiteitPostcode">Postcode</label>
+                  <input
+                    type="text"
+                    id="activiteitPostcode"
+                    name="activiteitPostcode"
+                    class="form-control"
+                    [(ngModel)]="activity.postalCode"
+                    #postalCode="ngModel"
+                    name="postalCode"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-5 m-2 pl-2">
+                  <label for="activiteitStraat">Straatnaam</label>
+                  <input
+                    type="text"
+                    id="activiteitStraat"
+                    name="activiteitStraat"
+                    class="form-control"
+                    [(ngModel)]="activity.streetName"
+                    #streetName="ngModel"
+                    name="streetName"
+                  />
+                </div>
+                <div class="form-group col-5 m-2 pl-2">
+                  <label for="activiteitHuisnummer">Huisnummer</label>
+                  <input
+                    type="text"
+                    id="activiteitHuisnummer"
+                    name="activiteitHuisnummer"
+                    class="form-control"
+                    [(ngModel)]="activity.streetNr"
+                    #streetNr="ngModel"
+                    name="streetNr"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-5 m-2 pl-2">
+                  <label for="activiteitAfstand" class="form-label"
+                    >Afstand</label
+                  >
+
+                  <div class="input-group mb-3">
+                    <input
+                      id="activiteitAfstand"
+                      name="activiteitAfstand"
+                      type="text"
+                      class="form-control"
+                      aria-label="Prijs activiteit"
+                      [(ngModel)]="activity.distance"
+                      #distance="ngModel"
+                      name="distance"
+                    />
+
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">km</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-5 m-2 pl-2">
+                  <label for="activiteitPrijs" class="form-label">Prijs</label>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">€</span>
+                    </div>
+                    <input
+                      id="activiteitPrijs"
+                      name="activiteitPrijs"
+                      type="text"
+                      class="form-control"
+                      aria-label="Prijs activiteit"
+                      [(ngModel)]="activity.price"
+                      #price="ngModel"
+                      name="price"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group m-2 col-5 pl-2">
+                  <label for="activiteitVervoersmiddel">Vervoersmiddel</label>
+                  <input
+                    type="text"
+                    id="activiteitVervoersmiddel"
+                    name="activiteitVervoersmiddel"
+                    class="form-control"
+                    [(ngModel)]="activity.transportType"
+                    #transportType="ngModel"
+                    name="transportType"
+                  />
+                </div>
+
+                <!-- <div class="form-group m-2 col-5 pl-2">
+                  <label for="activiteitBestanden">Uploaden bestanden</label>
+                  <input type="file" class="form-control-file" id="activiteitBestanden" [(ngModel)]="activity.file" multiple>
+                </div> -->
+              </div> 
+
+              <div class="form-row">
+                <div class="form-group m-2 col-10 pl-2">
+                  <label for="activiteitOpmerkingen">Opmerkingen</label>
+                  <textarea
+                    class="form-control"
+                    id="activiteitOpmerkingen"
+                    rows="4"
+                    [(ngModel)]="activity.comment"
+                    #comment="ngModel"
+                    name="comment"
+                  ></textarea>
+                </div>
+              </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-outline-info btn-lg" value="Activiteit opslaan"/>
+            <!-- Add additional buttons or actions as needed -->
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

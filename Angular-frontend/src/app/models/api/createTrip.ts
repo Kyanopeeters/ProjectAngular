@@ -1,10 +1,14 @@
 import { Activity } from "./activity";
+import { CountryForm } from "./createCountry";
+import { ActivityForm } from "./createActivity";
 
-export interface Trip {
-    id: number,
+export interface TripForm {
+    tripTypeId: number,
+    userId: string,
     name: string,
     departDate: Date,
-    city: string,
+    country: CountryForm[],
     returnDate: Date,
-    activity: Activity[]
+    isPublic: boolean
+    // activities: ActivityForm
 }

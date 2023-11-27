@@ -21,6 +21,7 @@
     "@auth0/auth0-angular": "^2.2.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^4.0.0",
+    "jose": "^5.1.1",
     "jquery": "^3.7.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

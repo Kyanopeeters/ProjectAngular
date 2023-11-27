@@ -10,14 +10,14 @@ import { FooterComponent } from './footer/footer.component';
 import { PublicTripsComponent } from './public-trips/public-trips.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
-import { LoginComponent } from './login/login.component';
+//import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
+import { FormsModule } from '@angular/forms';
+import { ActivityModalComponent } from './activity-modal/activity-modal.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment'; '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
-import { SignupComponent } from './signup/signup.component';
-import { LogoutComponent } from './logout/logout.component';
+
 
 const domain = environment.AUTH0_DOMAIN;
 const clientId = environment.AUTH0_CLIENT_ID;
@@ -29,18 +29,17 @@ const clientId = environment.AUTH0_CLIENT_ID;
     MyTripsComponent,
     FooterComponent,
     PublicTripsComponent,
-    LoginComponent,
     RegisterComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    CreateTripComponent,
     EditTripComponent,
     DetailsTripComponent,
-    SignupComponent,
-    LogoutComponent,
+    CreateTripComponent,
+    ActivityModalComponent,
     AuthModule.forRoot({
       domain: domain,
       clientId: clientId,
@@ -50,7 +49,7 @@ const clientId = environment.AUTH0_CLIENT_ID;
       },
       // The AuthHttpInterceptor configuration
       httpInterceptor: {
-        allowedList: [`${environment.api_url}/Trip`,`${environment.api_url}/Trip/*`]
+        allowedList: [`${environment.api_url}/Trip/*`, `${environment.api_url}/Activity/create`]
       }
     }),
   ],

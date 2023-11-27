@@ -2,19 +2,19 @@
 <div class="container">
   <h1 class="text-center">Maak een trip aan</h1>
 
-<!-- <form (ngSubmit)="submitForm()" #tripForm="ngForm" > -->
-<form >
+<!-- *De form werkt momenteel enkel om een trip te posten (name, dates, triptype, userId(werkt niet juist nog niet)) -->
+  <form #tripForm="ngForm" (ngSubmit)="onSubmit()" >
 <div class="form-row">
   <div class="form-group m-2 col-5">
-    <label for="naamTrip">Naam</label>
-    <input type="text" class="form-control" id="naamTrip" placeholder="Geef je trip een naam" required>
+    <label for="naamTrip" class="form-label">Naam</label>
+    <input type="text" class="form-control" id="naamTrip" name="naamTrip" [(ngModel)]="trip.name" #name="ngModel" placeholder="Geef je trip een naam" required>
   </div>
 
-    <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType">
+    <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType" >
       <label for="typeTrip">Soort trip</label>
-      <select id="typeTrip" class="form-control" required >
+      <select id="typeTrip" class="form-control" required [(ngModel)]="trip.tripTypeId" #tripTypeId="ngModel" name="typeTrip">
         <option selected disabled>Welke soort trip ga je maken?</option>
-        <option *ngFor="let type of tripType" [value]="type">{{ type.name }}</option>
+        <option *ngFor="let type of tripType" [value]="type.id">{{ type.name }}</option>
       </select>
     </div>
 
@@ -23,38 +23,51 @@
 <div class="form-row">
   <div class="form-group m-2 col-5">
     <label for="vertrekDatumTrip">Vertrek datum</label>
-    <input type="datetime-local" class="form-control" id="vertrekDatumTrip" required>
+    <input type="datetime-local" name="vertrekDatumTrip" class="form-control" id="vertrekDatumTrip" [(ngModel)]="trip.departDate" #departDate="ngModel" required>
   </div>
   <div class="form-group m-2 col-5">
     <label for="terugkomstDatumTrip">Terugkomst datum</label>
-    <input type="datetime-local" class="form-control" id="terugkomstDatumTrip">
+    <input type="datetime-local" name="terugkomstDatumTrip" class="form-control" id="terugkomstDatumTrip" [(ngModel)]="trip.returnDate" #returnDate="ngModel" required>
   </div>
 </div>
 <div class="w-100"></div>
 
-
+<!-- TODO: locaties werkende krijgen, worden momenteel niet gelinkt aan de trip -->
 <div class="form-row">
   <div class="form-group m-2 col-5">
     <label for="stadTrip">Stad</label>
-    <input type="text" class="form-control" id="stadTrip" placeholder="Naar welke stad ga je op je trip?">
+    <input type="text" class="form-control" id="stadTrip" [(ngModel)]="selectedCountry.cityName"  #cityName="ngModel" name="cityName" placeholder="Naar welke stad ga je op je trip?">
   </div>
 
   <div class="form-group m-2 col-5" *ngIf="tripCountry$ | async as tripCountry">
     <label for="landTrip">Land</label>
-    <select id="landTrip" class="form-control">
+    <!-- <select id="landTrip" class="form-control" [(ngModel)]="country.name" name="countryName" #name="ngModel">
       <option selected>Naar welk land ga je?</option>
-      <option *ngFor="let country of tripCountry" [value]="country">{{country.name}}</option>
+      <option *ngFor="let country of tripCountry" [value]="country.id">{{country.name}}</option>
+    </select> -->
+    <select [(ngModel)]="selectedCountryId" (change)="onCountrySelect(selectedCountryId)" name="countryName" class="form-control">
+      <option *ngFor="let country of tripCountry" [value]="country.id">
+        {{ country.name }}
+      </option>
     </select>
+    
   </div>
-  <div class="align-self-end m-2 ">
-    <button (click)="toggleLocationFields()" type="button" class="btn btn-info"><i class="fa-solid fa-plus"></i> Locatie</button>
-    <!-- <button type="button" class="btn btn-info"><i class="fa-solid fa-plus"></i> Locatie</button> -->
+  <!-- ! geeft een error bij mij -->
+    <!-- <div class="form-group m-2 col-5">
+      <label>
+      Trip publiek maken
+      <input type="checkbox" formControlName="isPublic">
+  </label>
+  </div> -->
+  <div class="align-self-end m-2 col-5">
+    <!-- <button (click)="toggleLocationFields()" type="button" class="btn btn-info"><i class="fa-solid fa-plus"></i> Locatie</button> -->
+    <button type="button" class="btn btn-info"><i class="fa-solid fa-plus"></i> Locatie</button>
 
   </div>
 </div>
 
 
-<div class="form-row" *ngIf="showLocationFields">
+<!-- <div class="form-row" *ngIf="showLocationFields">
 
   <div class=" pl-2 m-2 col-5 form-group" >
     <label for="stadTrip">Stad</label>
@@ -70,27 +83,27 @@
 
 </div>
       
-<div class="w-100"></div>
+<div class="w-100"></div> -->
 
 
-<div class="pt-4 form-row" >
+<!-- <div class="pt-4 form-row" >
 
-  <!-- <button (click)="" type="button" id="activiteitToevoegen" class="btn btn-info m-2 col-4"><i class="fa-solid fa-table-tennis-paddle-ball" ></i> Voeg activiteit toe <i class="fa-solid fa-table-tennis-paddle-ball" ></i></button> -->
-</div>
+  <button (click)="" type="button" id="activiteitToevoegen" class="btn btn-info m-2 col-4"><i class="fa-solid fa-table-tennis-paddle-ball" ></i> Voeg activiteit toe <i class="fa-solid fa-table-tennis-paddle-ball" ></i></button>
+</div> -->
 
-  <div class=" mt-4">
+  <!-- <div class=" mt-4">
     <h2 class="col-12">Activiteit</h2>
     <form>
   <div class="form-row">
     <div class="form-group m-2 pl-2 col-5">
       <label for="activiteitNaam">Naam</label>
-      <input type="text" id="activiteitNaam" name="activiteitNaam" class="form-control" required>
+      <input type="text" id="activiteitNaam" name="activiteitNaam" class="form-control" [(ngModel)]="activity.name" #name="ngModel" name="name" required>
     </div>
     <div class="form-group m-2 pl-2 col-5" *ngIf="tripActivityType$ | async as activityType">
         <label for="naam">Activiteit type</label>
-        <select id="typeActiviteit" name="typeActiviteit" class="form-control" required>
+        <select id="typeActiviteit" name="typeActiviteit" class="form-control" [(ngModel)]="activity.activityTypeId" #activityTypeId="ngModel" name="activityTypeId" required>
             <option selected disabled>Selecteer een activiteitstype</option>
-            <option *ngFor="let activitytype of activityType" [value]="activitytype">{{activitytype.name}}</option>
+            <option *ngFor="let activitytype of activityType" [value]="activitytype.id">{{activitytype.name}}</option>
         </select>
     </div>
   </div>
@@ -98,32 +111,32 @@
 <div class="form-row">
   <div class="form-group m-2 pl-2 col-5">
     <label for="activiteitBegintijd">Begintijd</label>
-    <input type="datetime-local" id="activiteitBegintijd" name="activiteitBegintijd" class="form-control">
+    <input type="datetime-local" id="activiteitBegintijd" name="activiteitBegintijd" class="form-control" [(ngModel)]="activity.startTime" #startTime="ngModel" name="startTime">
 </div>
 <div class="form-group m-2  pl-2 col-5">
     <label for="activiteitEindtijd">Eindtijd</label>
-    <input type="datetime-local" id="activiteitEindtijd" name="activiteitEindtijd" class="form-control">
+    <input type="datetime-local" id="activiteitEindtijd" name="activiteitEindtijd" class="form-control" [(ngModel)]="activity.endTime" #endTime="ngModel" name="endTime">
 </div>
 </div>
 
    <div class="form-row">
     <div class="form-group m-2 pl-2 col-5">
       <label for="activiteitGemeente">Gemeente</label>
-      <input type="text" id="activiteitGemeente" name="activiteitGemeente" class="form-control">
+      <input type="text" id="activiteitGemeente" name="activiteitGemeente" class="form-control" [(ngModel)]="activity.city" #city="ngModel" name="city">
     </div>
     <div class="form-group m-2 pl-2 col-5">
       <label for="activiteitPostcode">Postcode</label>
-      <input type="text" id="activiteitPostcode" name="activiteitPostcode" class="form-control">
+      <input type="text" id="activiteitPostcode" name="activiteitPostcode" class="form-control" [(ngModel)]="activity.postalCode" #postalCode="ngModel" name="postalCode">
     </div>
    </div>
   <div class="form-row">
       <div class="form-group col-5 m-2 pl-2">
         <label for="activiteitStraat">Straatnaam</label>
-        <input type="text" id="activiteitStraat" name="activiteitStraat" class="form-control">
+        <input type="text" id="activiteitStraat" name="activiteitStraat" class="form-control" [(ngModel)]="activity.streetName" #streetName="ngModel" name="streetName">
     </div>
       <div class="form-group col-5 m-2 pl-2">
         <label for="activiteitHuisnummer">Huisnummer</label>
-        <input type="text" id="activiteitHuisnummer" name="activiteitHuisnummer" class="form-control">
+        <input type="text" id="activiteitHuisnummer" name="activiteitHuisnummer" class="form-control" [(ngModel)]="activity.streetNr" #streetNr="ngModel" name="streetNr">
     </div> 
     
 
@@ -133,7 +146,7 @@
       <label for="activiteitAfstand" class="form-label">Afstand</label>
     
       <div class="input-group mb-3">
-        <input id="activiteitAfstand" name="activiteitAfstand" type="text" class="form-control" aria-label="Prijs activiteit">
+        <input id="activiteitAfstand" name="activiteitAfstand" type="text" class="form-control" aria-label="Prijs activiteit" [(ngModel)]="activity.distance" #distance="ngModel" name="distance">
 
         <div class="input-group-prepend">
           <span class="input-group-text">km</span>
@@ -149,7 +162,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">€</span>
           </div>
-          <input id="activiteitPrijs" name="activiteitPrijs" type="text" class="form-control" aria-label="Prijs activiteit">
+          <input id="activiteitPrijs" name="activiteitPrijs" type="text" class="form-control" aria-label="Prijs activiteit" [(ngModel)]="activity.price" #price="ngModel" name="price">
         </div>
       </div>
     </div>
@@ -157,12 +170,12 @@
     <div class="form-row">
       <div class="form-group m-2 col-5 pl-2">
           <label for="activiteitVervoersmiddel">Vervoersmiddel</label>
-          <input type="text" id="activiteitVervoersmiddel" name="activiteitVervoersmiddel" class="form-control">
+          <input type="text" id="activiteitVervoersmiddel" name="activiteitVervoersmiddel" class="form-control" [(ngModel)]="activity.transportType" #transportType="ngModel" name="transportType">
       </div>
 
       <div class="form-group m-2 col-5 pl-2">
         <label for="activiteitBestanden">Uploaden bestanden</label>
-        <input type="file" class="form-control-file" id="activiteitBestanden" multiple>
+        <input type="file" class="form-control-file" id="activiteitBestanden" [(ngModel)]="activity.file" multiple>
     </div>
       </div>
 
@@ -170,20 +183,21 @@
 
     <div class="form-group m-2 col-10 pl-2">
         <label for="activiteitOpmerkingen">Opmerkingen</label>
-        <textarea class="form-control" id="activiteitOpmerkingen" rows="4"></textarea>
-    </div>
-    </div>
-</form>
+        <textarea class="form-control" id="activiteitOpmerkingen" rows="4" [(ngModel)]="activity.comment" #comment="ngModel" name="comment"></textarea>
+    </div> -->
 
 <hr class="dashed">
 
-</div>
+<!-- </div> -->
   <div class="w-100">
 
     <div class="pt-5">
-      <button type="submit" class="btn btn-outline-info btn-lg">Trip opslaan</button>
+      <!-- <input type="submit" class="btn btn-outline-info btn-lg" value="Trip opslaan"/> -->
 
     </div>
 </div>
+<input type="submit" class="btn btn-outline-info btn-lg" value="Trip opslaan"/>
+</form>
 
 <script src="../create-trip/create-trip.component.ts"></script>
+<!-- <pre>{{ tripCountry$ | async | json }}</pre> -->

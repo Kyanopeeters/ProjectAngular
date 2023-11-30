@@ -19,6 +19,7 @@ import { environment } from '../environments/environment'; '@angular/common/http
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 
+
 const domain = environment.AUTH0_DOMAIN;
 const clientId = environment.AUTH0_CLIENT_ID;
 

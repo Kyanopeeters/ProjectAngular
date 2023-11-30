@@ -43,4 +43,8 @@ export class TripService {
   deleteTrip(id: number): Observable<Trip>{
     return this.http.delete<Trip> ("https://localhost:6587/api/Trip/" + id)
   }
+
+  searchTrip(searchstring: string): Observable<Trip[]> {
+    return this.http.get<Trip[]>("https://localhost:6587/api/Trip/search?Name=" + searchstring)
+  }
 }

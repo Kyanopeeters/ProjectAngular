@@ -1,9 +1,14 @@
 <h1 class="mt-3 ml-4 mb-2 text-center">Openbare Trips</h1>
 <hr width="50%">
 <div style="margin:auto; max-width:300px" class="search">
-    <input type="text" placeholder="Search.." name="search2">
-    <button type="submit"><i class="fa fa-search"></i></button>
-  </div>
+  <!-- <form>
+    <input [(ngModel)]="searchString" id="search" type="text" placeholder="Search.." name="searchString">
+    <button (click)="search(searchString)"><i class="fa fa-search"></i></button>
+  </form> -->
+  <input type="text" name="searchString" id="searchValue" [(ngModel)]="searchString" >
+  <button (click)="search()"><i class="fa fa-search"></i></button> 
+    
+</div>
 <div class="con">
     <div class="card mt-4 ml-4" style="width: 23rem;" *ngFor="let t of (trips$ | async)">
       <img class="card-img-top" src="../../assets/{{t.tripType.id}}.jpg" alt="Card image cap">

@@ -12,18 +12,19 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { ActivityModalComponent } from './activity-modal/activity-modal.component';
 
 const routes: Routes = [
 
   {path: "", component:HomepageComponent},
   {path: "publicTrips", component:PublicTripsComponent},
   {path: "myTrips", component:MyTripsComponent, canActivate: [AuthGuard]},
-
+  {path: "activiteittoevoegen/:tripId", component:ActivityModalComponent},
   {path: 'activiteiten', component: ActivityComponent },
   {path: 'trip/:id', component: DetailsTripComponent, canActivate: [AuthGuard]},
   {path: 'profiel', component: ProfileComponent },
   {path: 'tripaanmaken', component:CreateTripComponent},
-  {path: 'tripbewerken', component:EditTripComponent}
+  {path: 'tripbewerken/:id', component:EditTripComponent}
    
 ];
 

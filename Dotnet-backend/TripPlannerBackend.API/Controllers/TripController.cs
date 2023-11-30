@@ -100,6 +100,8 @@ namespace TripPlannerBackend.API.Controllers
                 .Include(t => t.TripType)
                 .Include(t => t.TripCountries).ThenInclude(t => t.Country)
                 .Where(t => t.Name.ToLower().Contains(searchDto.Name.ToLower()) && t.IsPublic);
+            // .Where(t => (t.Name.ToLower().Contains(searchDto.Name.ToLower()) && t.IsPublic || (t.TripCountries.().Contains(searchDto.Name.ToLower())) && t.IsPublic));
+
 
             if (trips == null)
             {
@@ -117,7 +119,7 @@ namespace TripPlannerBackend.API.Controllers
         public async Task<ActionResult<GetTripDto>> AddTrip(CreateTripDto trip)
         {
             //We map the CreateTripDto to the Trip entity object
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Trip tripToAdd = _mapper.Map<Trip>(trip);
             _context.Trips.Add(tripToAdd);
             await _context.SaveChangesAsync();

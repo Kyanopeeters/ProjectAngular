@@ -1,28 +1,7 @@
 <!-- modal -->
-<div
-  class="modal fade"
-  id="activityModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="ModalLabel"
-  aria-hidden="true"
-  #activityModal
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Activiteit toevoegen</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+<div class="container">
         <!-- content -->
+        <h1>Activiteit toevoegen aan trip</h1>
         <form #activityForm="ngForm" (ngSubmit)="onSubmit()">
           <div class="mt-4">
               <div class="form-row">
@@ -157,7 +136,7 @@
                       name="activiteitAfstand"
                       type="text"
                       class="form-control"
-                      aria-label="Prijs activiteit"
+                      aria-label="Afstand activiteit"
                       [(ngModel)]="activity.distance"
                       #distance="ngModel"
                       name="distance"
@@ -223,12 +202,11 @@
                   ></textarea>
                 </div>
               </div>
-          <div class="modal-footer">
+          <div>
             <input type="submit" class="btn btn-outline-info btn-lg" value="Activiteit opslaan"/>
+            <a (click)="back()" class="btn btn-outline-secondary mr-3 ml-4"><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
             <!-- Add additional buttons or actions as needed -->
           </div>
       </div>
       </form>
     </div>
-  </div>
-</div>

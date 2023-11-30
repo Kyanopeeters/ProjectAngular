@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 export class PublicTripsComponent {
   trips$ : Observable<Trip[]> = new Observable<Trip[]>();
 
+  searchString: string = "Bel";
+
+
   constructor(private tripService: TripService, private router : Router) {}
 
   ngOnInit(): void {
@@ -20,5 +23,10 @@ export class PublicTripsComponent {
 
   detail(id : number) {
     this.router.navigate(['/trip', id]);
+  }
+
+  search() {
+    console.log(this.searchString)
+    this.trips$ = this.tripService.searchTrip(this.searchString);
   }
 }

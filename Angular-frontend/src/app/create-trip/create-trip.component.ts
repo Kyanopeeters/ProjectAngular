@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TripType } from '../models/api/trip-type';
 import { TripService } from '../services/trip.service';
-import { Observable } from 'rxjs';
+import { Observable, count } from 'rxjs';
 import { CountryService } from '../services/country.service';
 import { Country } from '../models/api/country';
 import { ActivityType } from '../models/api/activityType';
@@ -11,7 +11,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { TripForm } from '../models/api/createTrip';
 import { UserService } from '../services/user.service';
 import { CountryForm } from '../models/api/createCountry';
-import { Router } from '@angular/router';
+import { Router, TitleStrategy } from '@angular/router';
+import { Countries } from '../models/countries';
 
 @Component({
   selector: 'app-create-trip',
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
 
 export class CreateTripComponent implements OnInit {
   userIdData : string = "";
+  i: number = 0;
 
   constructor(private tripService: TripService,
     private countryService: CountryService, 
@@ -30,6 +32,11 @@ export class CreateTripComponent implements OnInit {
     private userService: UserService,
     private router: Router
     ){}
+
+    
+  tripType$: Observable<TripType[]> = new Observable<TripType[]>()
+  tripCountry$: Observable<Country[]> = new Observable<Country[]>()
+  tripActivityType$: Observable<ActivityType[]> = new Observable<ActivityType[]>()
 
   ngOnInit(): void {
     this.tripType$ = this.tripService.getTripTypes();
@@ -49,15 +56,13 @@ export class CreateTripComponent implements OnInit {
   onSubmit = async () => {
     try {
       this.trip.userId = this.userIdData;
-      console.log(this.trip.userId)
+      this.addCountry();
       await this.tripService.createTrip(this.trip).subscribe(
         createdTrip => {
-
-          this.addCountry(this.selectedCountry); // Voeg het geselecteerde land toe aan de trip
-          this.onCountrySelect(this.selectedCountryId); // Voer acties uit met het geselecteerde land ID
-          console.log('Trip created successfully:', createdTrip);
-          this.router.navigate(['/myTrips']); // Navigeer naar de 'mytrips' pagina
-
+           console.log('Trip created successfully:', createdTrip);
+          
+          // Navigate to my trips page
+          this.router.navigate(['/myTrips']); 
         },
         error => {
           console.error('Failed to create trip:', error);
@@ -66,28 +71,24 @@ export class CreateTripComponent implements OnInit {
     } catch (error) {
       console.log("failed to create trip" , error)
     }
-    
   }
 
-  tripType$: Observable<TripType[]> = new Observable<TripType[]>()
-  tripCountry$: Observable<Country[]> = new Observable<Country[]>()
-  tripActivityType$: Observable<ActivityType[]> = new Observable<ActivityType[]>()
-
-  addCountry(country: CountryForm) {
-    this.trip.country.push(country);
-    // this.newCountry = { name: '', cityName: '' }; // Clearing the form after adding country
-
+  // function addCountry
+  addCountry() {
+    this.trip.country.push({
+      id: 0,
+      cityName : this.selectedCountry.cityName,
+      countryId: +this.selectedCountryId!
+    });
   }
-  selectedCountry: CountryForm = { id: 0, countryId: 0, cityName: '' }; // Initialiseer een object van het type CountryForm
 
-  selectedCountryId: number | undefined; // Variabele om de geselecteerde ID bij te houden
+  selectedCountry: CountryForm = { id: 0, countryId: 0, cityName: '' }; 
+  selectedCountryId!: string; 
 
   onCountrySelect(selectedId: number | undefined) {
     if (selectedId !== undefined) {
       console.log('Geselecteerde land ID:', selectedId);
-      // Doe iets met het geselecteerde land ID
     }
-    console.log(selectedId);
   }
   
   trip: TripForm = {
@@ -97,26 +98,15 @@ export class CreateTripComponent implements OnInit {
     departDate: new Date,
     returnDate: new Date,
     country: [],
-    // country: this.countries,
-    isPublic: true,
-    // activities: this.activity
+    isPublic: false,
   }
 
-
-  // locations: Location[] = [];
-  showLocationFields: boolean = false;
-
-  toggleLocationFields() {
-    this.showLocationFields = !this.showLocationFields;
+  
+  addNewLocationFields() {
+    // this.selectedCountryId = '';
+    this.selectedCountry = { id: 0, countryId: 0, cityName: '' };
+    this.addCountry();
+    
   }
-
-  // addLocation() {
-  //   this.locations.push(new Location());
-  // }
-
-  // nieuweLocaties:AanmakenTripComponent[] =[];
-  // toevoegenNieuweLocatie(){
-  //   this.nieuweLocaties.push(new AanmakenTripComponent())
-  // }
 
 };

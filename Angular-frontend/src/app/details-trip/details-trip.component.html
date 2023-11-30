@@ -32,7 +32,8 @@
       <div class="d-flex justify-content-around">
         <a (click)="back()" class="btn btn-outline-secondary mr-3"><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
         @if( trip.userId === userId ) {
-        <a class="btn btn-outline-secondary">Bewerk trip</a>
+        <a (click)="updateTripById(trip.id, trip)" class="btn btn-outline-secondary">Bewerk trip</a>
+
         <a class="btn btn-outline-secondary">
           Deelnemer uitnodigen
         </a>
@@ -66,9 +67,10 @@
       </div>
       @if( trip.userId === userId ) {
       <div>
-        <button class="btn btn-outline-secondary mt-3 ml-4 mb-2" data-toggle="modal" data-target="#activityModal"><i class="fa-solid fa-plus"></i> Toevoegen</button>
+        <!-- <button class="btn btn-outline-secondary mt-3 ml-4 mb-2" data-toggle="modal" data-target="#activityModal"><i class="fa-solid fa-plus"></i> Toevoegen</button> -->
+        <a (click)="addActivity(trip.id)" class="btn btn-outline-secondary">Activiteit toevoegen</a>
       </div>
-      <app-activity-modal [tripID]="trip.id"></app-activity-modal>
+      <!-- <app-activity-modal [tripID]="trip.id"></app-activity-modal> -->
     }
     </div>
   </div>

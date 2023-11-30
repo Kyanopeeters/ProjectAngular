@@ -14,7 +14,7 @@ namespace TripPlannerBackend.DAL.Entity
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         //public object? Document { get; set; }
-        public int? Price { get; set; }
+        public double? Price { get; set; }
         public string? StreetName { get; set; }
         public string? StreetNr { get; set; }
         public string? City { get; set; }
@@ -22,7 +22,7 @@ namespace TripPlannerBackend.DAL.Entity
         public string? Country {  get; set; }
         public string? Comment { get; set; }
         public string? TransportType { get;set; }
-        public int? Distance {  get; set; }
+        public double? Distance {  get; set; }
         public int ActivityTypeId { get; set; }
 
         public Trip Trip { get; set; }

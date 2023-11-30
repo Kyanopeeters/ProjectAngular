@@ -8,18 +8,19 @@
   </head>
   <div class="container">
     <h1 class="text-center">Maak een trip aan</h1>
-    <form >
-  <div class="form-row">
-    <div class="form-group m-2 col-5">
-      <label for="naamTrip">Naam</label>
-      <input type="text" class="form-control" id="naamTrip" placeholder="Geef je trip een naam" required>
-    </div>
-  
+  <form #tripForm="ngForm" >
+    <div class="form-row">
       <div class="form-group m-2 col-5">
+        <label for="naamTrip">Naam</label>
+        <input type="text" class="form-control" id="naamTrip"  placeholder="Geef je trip een naam" value="{{trip?.name}}"
+        placeholder="Geef je trip een naam" required>
+      </div>
+  
+      <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType">
         <label for="typeTrip">Soort trip</label>
-        <select id="typeTrip" class="form-control" required>
+        <select id="typeTrip" class="form-control" value="{{trip?.tripType?.name}}" required>
           <option selected>Welke soort trip ga je maken?</option>
-          <option>...</option>
+          <option *ngFor="let type of tripType"  >{{type.name}} </option>        
         </select>
       </div>
   
@@ -28,33 +29,34 @@
       <div class="form-row">
         <div class="form-group m-2 col-5">
           <label for="vertrekDatumTrip">Vertrek datum</label>
-          <input type="datetime-local" class="form-control" id="vertrekDatumTrip" required>
+          <input type="datetime-local" value="{{trip?.departDate}}" class="form-control" id="vertrekDatumTrip" required>
         </div>
         <div class="form-group m-2 col-5">
           <label for="terugkomstDatumTrip">Terugkomst datum</label>
-          <input type="datetime-local" class="form-control" id="terugkomstDatumTrip">
+          <input type="datetime-local"  value="{{trip?.returnDate}}" class="form-control" id="terugkomstDatumTrip">
         </div>
       </div>
-      <div class="w-100"></div>
+      <div class="w-100"></div> 
   
   
-  <div class="form-row">
+  <div class="form-row" *ngFor="let countriesInTrip of trip?.tripCountries" >
     <div class="form-group m-2 col-5">
       <label for="stadTrip">Stad</label>
-      <input type="text" class="form-control" id="stadTrip" placeholder="Naar welke stad ga je op je trip?">
-    </div>
+      <input type="text"  class="form-control" id="stadTrip" [value]="countriesInTrip.cityName" placeholder="Naar welke stad ga je op je trip?">
+    </div> 
   
-    <div class="form-group m-2 col-5">
+    <div class="form-group m-2 col-5" *ngIf="tripCountry$ | async as tripCountry">
       <label for="landTrip">Land</label>
-      <select id="landTrip" class="form-control">
+      <select id="landTrip" class="form-control" [value]="countriesInTrip.name">
         <option selected>Naar welk land ga je?</option>
-        <option>...</option>
+        <option *ngFor="let country of tripCountry" > {{ country.name }} </option>
       </select>
-    </div>
+    </div>  
+  </div>
+
     <div class="align-self-end m-2 ">
       <button (click)="addNewCountry()" type="button" class="btn btn-info"><i class="fa-solid fa-plus"></i> Locatie</button>
     </div>
-  </div>
   
   
     <div class="form-row" *ngFor="let newCountry of newCountries">

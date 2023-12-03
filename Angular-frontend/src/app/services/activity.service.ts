@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivityType } from '../models/api/activity-type';
-import { ActivityForm } from '../models/api/createactivity';
+import { ActivityForm } from '../models/api/createActivity';
 
 @Injectable({
   providedIn: 'root'

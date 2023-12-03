@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivityForm } from '../models/api/createactivity';
+import { ActivityForm } from '../models/api/createActivity';
 import { ActivityType } from '../models/api/activity-type';
 import { Observable } from 'rxjs';
 import { ActivityService } from '../services/activity.service';

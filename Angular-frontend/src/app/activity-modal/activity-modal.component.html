@@ -1,38 +1,38 @@
 <!-- modal -->
 <div class="container">
         <!-- content -->
-        <h1>Activiteit toevoegen aan trip</h1>
+        <h1 class="text-center m-4 mb-2">Activiteit toevoegen aan trip</h1>
         <form #activityForm="ngForm" (ngSubmit)="onSubmit()">
           <div class="mt-4">
               <div class="form-row">
                 <div class="form-group m-2 pl-2 col-5">
-                  <label for="activiteitNaam">Naam</label>
+                  <label for="activiteitNaam" >Naam *</label>
                   <input
                     type="text"
                     id="activiteitNaam"
-                    name="activiteitNaam"
                     class="form-control"
                     [(ngModel)]="activity.name"
                     #name="ngModel"
                     name="name"
                     required
                   />
+                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Naam is verplicht</div>
                 </div>
+
                 <div
                   class="form-group m-2 pl-2 col-5"
                   *ngIf="tripActivityType$ | async as activityType"
                 >
-                  <label for="naam">Activiteit type</label>
+                  <label for="typeActiviteit">Activiteit type *</label>
                   <select
                     id="typeActiviteit"
-                    name="typeActiviteit"
                     class="form-control"
                     [(ngModel)]="activity.activityTypeId"
                     #activityTypeId="ngModel"
                     name="activityTypeId"
                     required
                   >
-                    <option selected disabled>
+                    <option disabled selected>
                       Selecteer een activiteitstype
                     </option>
                     <option
@@ -42,6 +42,7 @@
                       {{ type.name }}
                     </option>
                   </select>
+                  <div [hidden]="activityTypeId.valid || activityTypeId.pristine" class="alert alert-danger">Activiteitstype is verplicht</div>
                 </div>
               </div>
 
@@ -51,7 +52,6 @@
                   <input
                     type="datetime-local"
                     id="activiteitBegintijd"
-                    name="activiteitBegintijd"
                     class="form-control"
                     [(ngModel)]="activity.startTime"
                     #startTime="ngModel"
@@ -63,12 +63,15 @@
                   <input
                     type="datetime-local"
                     id="activiteitEindtijd"
-                    name="activiteitEindtijd"
                     class="form-control"
                     [(ngModel)]="activity.endTime"
                     #endTime="ngModel"
                     name="endTime"
                   />
+                </div>
+                
+                <div *ngIf="activity.startTime > activity.endTime" class="alert alert-danger">
+                  Starttijd moet eerder zijn dan de eindtijd.
                 </div>
               </div>
 
@@ -78,7 +81,6 @@
                   <input
                     type="text"
                     id="activiteitGemeente"
-                    name="activiteitGemeente"
                     class="form-control"
                     [(ngModel)]="activity.city"
                     #city="ngModel"
@@ -90,7 +92,6 @@
                   <input
                     type="text"
                     id="activiteitPostcode"
-                    name="activiteitPostcode"
                     class="form-control"
                     [(ngModel)]="activity.postalCode"
                     #postalCode="ngModel"
@@ -104,7 +105,6 @@
                   <input
                     type="text"
                     id="activiteitStraat"
-                    name="activiteitStraat"
                     class="form-control"
                     [(ngModel)]="activity.streetName"
                     #streetName="ngModel"
@@ -116,7 +116,6 @@
                   <input
                     type="text"
                     id="activiteitHuisnummer"
-                    name="activiteitHuisnummer"
                     class="form-control"
                     [(ngModel)]="activity.streetNr"
                     #streetNr="ngModel"
@@ -133,13 +132,13 @@
                   <div class="input-group mb-3">
                     <input
                       id="activiteitAfstand"
-                      name="activiteitAfstand"
-                      type="text"
+                      type="number"
+                      min="0"
                       class="form-control"
-                      aria-label="Afstand activiteit"
                       [(ngModel)]="activity.distance"
                       #distance="ngModel"
                       name="distance"
+                      
                     />
 
                     <div class="input-group-prepend">
@@ -157,13 +156,13 @@
                     </div>
                     <input
                       id="activiteitPrijs"
-                      name="activiteitPrijs"
-                      type="text"
+                      type="number"
+                      min="0"
                       class="form-control"
-                      aria-label="Prijs activiteit"
                       [(ngModel)]="activity.price"
                       #price="ngModel"
                       name="price"
+                      
                     />
                   </div>
                 </div>
@@ -175,7 +174,6 @@
                   <input
                     type="text"
                     id="activiteitVervoersmiddel"
-                    name="activiteitVervoersmiddel"
                     class="form-control"
                     [(ngModel)]="activity.transportType"
                     #transportType="ngModel"
@@ -203,9 +201,8 @@
                 </div>
               </div>
           <div>
-            <input type="submit" class="btn btn-outline-info btn-lg" value="Activiteit opslaan"/>
-            <a (click)="back()" class="btn btn-outline-secondary mr-3 ml-4"><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
-            <!-- Add additional buttons or actions as needed -->
+            <input type="submit" class="btn btn-outline-info m-2 mt-4" value="Activiteit opslaan" [disabled]="activityForm.invalid || activityForm.pristine || activity.startTime > activity.endTime" />
+            <a (click)="back()" class="btn btn-outline-secondary mr-3 ml-4 mt-3"><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
           </div>
       </div>
       </form>

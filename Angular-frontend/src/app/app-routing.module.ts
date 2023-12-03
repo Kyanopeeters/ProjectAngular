@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: "activiteittoevoegen/:tripId", component:ActivityModalComponent},
   {path: 'activiteiten', component: ActivityComponent },
   {path: 'trip/:id', component: DetailsTripComponent, canActivate: [AuthGuard]},
-  {path: 'profiel', component: ProfileComponent },
+  {path: 'profiel', component: ProfileComponent, canActivate: [AuthGuard] },
   {path: 'tripaanmaken', component:CreateTripComponent},
   {path: 'tripbewerken/:id', component:EditTripComponent}
    

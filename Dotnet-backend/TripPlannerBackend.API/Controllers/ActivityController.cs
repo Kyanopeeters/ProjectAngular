@@ -62,7 +62,7 @@ namespace TripPlannerBackend.API.Controllers
 
         // Create an activity
         [HttpPost("create")]
-        //[Authorize]
+        [Authorize]
         //[Authorize(Policy = "TripWriteAccess")]
         public async Task<ActionResult<GetActivityDto>> AddActivity(CreateActivityDto activity)
         {

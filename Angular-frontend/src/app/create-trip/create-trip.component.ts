@@ -2,17 +2,17 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TripType } from '../models/api/trip-type';
 import { TripService } from '../services/trip.service';
-import { Observable, count } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CountryService } from '../services/country.service';
 import { Country } from '../models/api/country';
-import { ActivityType } from '../models/api/activityType';
+import { ActivityType } from '../models/api/activity-type';
 import { ActivityService } from '../services/activity.service';
 import { FormsModule, NgForm } from '@angular/forms';
-import { TripForm } from '../models/api/createTrip';
+import { TripForm } from '../models/api/create-trip';
 import { UserService } from '../services/user.service';
-import { CountryForm } from '../models/api/createCountry';
-import { Router, TitleStrategy } from '@angular/router';
-import { Countries } from '../models/countries';
+import { CountryForm } from '../models/api/create-country';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-create-trip',
@@ -23,14 +23,18 @@ import { Countries } from '../models/countries';
 })
 
 export class CreateTripComponent implements OnInit {
+  // Initalisation of variables
   userIdData : string = "";
-  i: number = 0;
+  nextAvailableId: number = 0;
+
+  selectedCountry: CountryForm = { id: 0, countryId: 0, cityName: '' }; 
+  selectedCountryId!: string; 
 
   constructor(private tripService: TripService,
     private countryService: CountryService, 
     private activityService: ActivityService, 
     private userService: UserService,
-    private router: Router
+    private router: Router,
     ){}
 
     
@@ -53,10 +57,14 @@ export class CreateTripComponent implements OnInit {
     )
   }
 
+  // Submit a trip
   onSubmit = async () => {
     try {
+      // User id of this trip & function addCountry
       this.trip.userId = this.userIdData;
       this.addCountry();
+
+      // Create a trip
       await this.tripService.createTrip(this.trip).subscribe(
         createdTrip => {
            console.log('Trip created successfully:', createdTrip);
@@ -64,6 +72,7 @@ export class CreateTripComponent implements OnInit {
           // Navigate to my trips page
           this.router.navigate(['/myTrips']); 
         },
+        // In case of errors, show the error
         error => {
           console.error('Failed to create trip:', error);
         });
@@ -76,21 +85,14 @@ export class CreateTripComponent implements OnInit {
   // function addCountry
   addCountry() {
     this.trip.country.push({
-      id: 0,
+      // id: 0,
+      id: this.nextAvailableId,
       cityName : this.selectedCountry.cityName,
       countryId: +this.selectedCountryId!
     });
   }
-
-  selectedCountry: CountryForm = { id: 0, countryId: 0, cityName: '' }; 
-  selectedCountryId!: string; 
-
-  onCountrySelect(selectedId: number | undefined) {
-    if (selectedId !== undefined) {
-      console.log('Geselecteerde land ID:', selectedId);
-    }
-  }
   
+  // Initialisation of a trip object
   trip: TripForm = {
     name: "",
     userId: this.userIdData,
@@ -100,13 +102,18 @@ export class CreateTripComponent implements OnInit {
     country: [],
     isPublic: false,
   }
-
   
   addNewLocationFields() {
-    // this.selectedCountryId = '';
-    this.selectedCountry = { id: 0, countryId: 0, cityName: '' };
+    // Function addcountry()
     this.addCountry();
-    
+
+    // Input fields not copying
+    this.trip.country[this.nextAvailableId] = {id: 0, countryId: 0, cityName: ''};
+
+    // Id + 1
+    this.nextAvailableId++;
+
   }
+  
 
 };

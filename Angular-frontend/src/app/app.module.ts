@@ -17,7 +17,8 @@ import { ActivityModalComponent } from './activity-modal/activity-modal.componen
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment'; '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
-
+import { CustomFilterPipe } from './custom-filter-pipe/custom-filter-pipe.pipe';
+import { WeatherModalComponent } from './weather-modal/weather-modal.component';
 
 
 const domain = environment.AUTH0_DOMAIN;
@@ -29,6 +30,7 @@ const clientId = environment.AUTH0_CLIENT_ID;
     MenuComponent,
     MyTripsComponent,
     FooterComponent,
+    CustomFilterPipe,
     PublicTripsComponent,
     RegisterComponent,
   ],
@@ -41,6 +43,7 @@ const clientId = environment.AUTH0_CLIENT_ID;
     DetailsTripComponent,
     CreateTripComponent,
     ActivityModalComponent,
+    WeatherModalComponent,
     AuthModule.forRoot({
       domain: domain,
       clientId: clientId,

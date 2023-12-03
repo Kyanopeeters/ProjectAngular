@@ -27,7 +27,7 @@ namespace TripPlannerBackend.API.Controllers
 
         //Get trip By ID
         [HttpGet("{id}")]
-        //[Authorize]
+        [Authorize]
         //[Authorize(Policy = "TripReadAccess")]
         public async Task<ActionResult<GetTripDto>> GetTrip(int id)
         {
@@ -78,7 +78,6 @@ namespace TripPlannerBackend.API.Controllers
                 .Include(t => t.Activities).ThenInclude(t => t.ActivityType)
                 .Include(t => t.TripType)
                 .Include(t => t.TripCountries).ThenInclude(t => t.Country)
-                //.Where(t => t.UserId == userId)
                 .ToListAsync();
 
             if (trips == null)
@@ -173,9 +172,9 @@ namespace TripPlannerBackend.API.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             
             // Get the trip
-            var trip = await _context.Trips
-           .Where(t => t.UserId == userId && t.Id == id) 
+            var trip = await _context.Trips .Where(t => t.UserId == userId && t.Id == id) 
            .FirstOrDefaultAsync();
+
 
             // Trip doesn't exist
             if (trip == null)

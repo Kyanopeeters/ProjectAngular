@@ -12,5 +12,6 @@ export interface Trip {
     tripType: TripType,
     departDate: Date,
     returnDate: Date,
-    tripCountries: Country[]
+    tripCountries: Country[],
+    isPublic: boolean
 }

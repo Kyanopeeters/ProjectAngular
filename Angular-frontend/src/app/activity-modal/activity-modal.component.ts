@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivityForm } from '../models/api/createActivity';
-import { ActivityType } from '../models/api/activityType';
+import { ActivityForm } from '../models/api/createactivity';
+import { ActivityType } from '../models/api/activity-type';
 import { Observable } from 'rxjs';
 import { ActivityService } from '../services/activity.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-activity-modal',
@@ -16,8 +17,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ActivityModalComponent implements OnInit {
   tripID: number = -1;
-  
-  constructor(private activityService: ActivityService, private route: ActivatedRoute, private router: Router, private location: Location
+
+
+  constructor(private activityService: ActivityService, private route: ActivatedRoute, private router: Router, private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,7 @@ export class ActivityModalComponent implements OnInit {
       this.tripID = +params['tripId']; 
       
     });
+
   }
 
   tripActivityType$: Observable<ActivityType[]> = new Observable<ActivityType[]>()
@@ -40,11 +43,13 @@ export class ActivityModalComponent implements OnInit {
     postalCode: "",
     streetName: "",
     streetNr: "",
-    price: "",
-    distance: "",
+    price: 0,
+    distance: 0,
     comment: "",
-    activityTypeId: 0
+    activityTypeId: ""
   }
+
+  
 
   onSubmit = async () => {
     this.activity.tripId = this.tripID;

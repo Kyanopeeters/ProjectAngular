@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-trips.component.css']
 })
 export class MyTripsComponent {
-  trips$ : Observable<Trip[]> 
-  = new Observable<Trip[]>();
+  private deleteTripId: number | null = null;
+  selectedTrip: Trip | null = null;
+
+  trips$ : Observable<Trip[]>  = new Observable<Trip[]>();
 
   constructor(private tripService: TripService, private router : Router) { }
 
@@ -25,21 +27,44 @@ export class MyTripsComponent {
 
   detail(id : number) {
     this.router.navigate(['/trip', id]);
+    console.log(id);
+
+  }
+
+
+  // Get the right trip(information) and the id of the trip to delete
+  setDelete(id: number) {
+    this.deleteTripId = id;
+    console.log(id);
+    // Get the selected trip by id
+    this.tripService.getTripById(id).subscribe(trip => {
+      this.selectedTrip = trip;
+      console.log(trip);
+    });
   }
   
-  deleteTrip(id: number) {
-    if (confirm('Weet je zeker dat je deze trip wilt verwijderen?')) {
-      this.tripService.deleteTrip(id).subscribe(
+  
+  // To delete a trip
+  deleteTrip() {
+    if (this.deleteTripId !== null) {
+      console.log(this.deleteTripId);
+      this.tripService.deleteTrip(this.deleteTripId).subscribe(
+        // In case of successful deletion
         response => {
           console.log('Server response:', response);
           console.log('Trip has been successfully deleted!');
           this.getAllMyTrips();
         },
+        // In case of errors
         error => {
           console.error('Trip deletion error:', error);
         }
       );
+  
+      // Reset deleteTripId after deletion
+      this.deleteTripId = null;
+    } else {
+      console.log('No trip has been selected!');
     }
   }
-  
 }

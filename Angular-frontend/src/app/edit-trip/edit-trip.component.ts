@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Observable, count } from 'rxjs';
 import { Country } from '../models/api/country';
-import { ActivityType } from '../models/api/activityType';
+import { ActivityType } from '../models/api/activity-type';
 import { TripType } from '../models/api/trip-type';
 import { CountryService } from '../services/country.service';
 import { ActivityService } from '../services/activity.service';

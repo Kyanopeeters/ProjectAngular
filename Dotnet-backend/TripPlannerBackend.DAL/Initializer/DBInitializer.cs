@@ -55,17 +55,17 @@ namespace TripPlannerBackend.DAL.Initializer
                 new Trip {
                     Name = "Skieën in Duitsland", UserId = "auth0|655b48b2c90bf30f6a12291a", TripTypeId= 1,DepartDate = DateTime.Parse("2023-01-20"), ReturnDate = DateTime.Parse("2023-01-29"), IsPublic = false, Activities = new List<Activity>()
                 {
-                    new Activity(){Name="Snowboard initiatie", ActivityTypeId = 4, Price = 500, StartTime = DateTime.Parse("2023-01-21"), EndTime = DateTime.Parse("2023-01-21")},
-                    new Activity(){ Name = "Heenvlucht", ActivityTypeId = 1, TransportType = "Vliegtuig" },
-                    new Activity(){ Name = "Overnachting in een iglo", ActivityTypeId = 5, Price = 200, City = "Winterberg" },
+                    new Activity(){Name="Snowboard initiatie", ActivityTypeId = 4, Price = 500, StartTime = DateTime.Parse("2023-01-21 10:30:00"), EndTime = DateTime.Parse("2023-01-21 12:00:00")},
+                    new Activity(){ Name = "Heenvlucht", ActivityTypeId = 1, TransportType = "Vliegtuig", StartTime = DateTime.Parse("2023-01-21 13:00:00"), EndTime = DateTime.Parse("2023-01-21 15:00:00") },
+                    new Activity(){ Name = "Overnachting in een iglo", ActivityTypeId = 5, Price = 200, StartTime = DateTime.Parse("2023-01-21 20:00:00"), EndTime = DateTime.Parse("2023-01-22 08:00:00"), City = "Winterberg" },
         
                 }
                 },
                 new Trip {
                     Name = "Trip België",UserId = "auth0|655f9d5c022a9fc3be9f4315", TripTypeId= 2,DepartDate = DateTime.Parse("2023-03-20"), ReturnDate = DateTime.Parse("2023-03-26"), IsPublic = true, Activities = new List<Activity>()
                 {
-                    new Activity(){Name ="Bezoek Rubenshuis", ActivityTypeId = 2, City = "Antwerpen", Price = 20, },
-                    new Activity(){ Name = "Dagje Gent", ActivityTypeId = 3, City = "Gent", TransportType = "Trein", Comment = "Bezoek aan het Gravesteen is aangeraden door een vriend." },
+                    new Activity(){Name ="Bezoek Rubenshuis", ActivityTypeId = 2, City = "Antwerpen", Price = 20, StartTime = DateTime.Parse("2023-03-20 10:30:00"), EndTime = DateTime.Parse("2023-03-20 12:00:00")},
+                    new Activity(){ Name = "Dagje Gent", ActivityTypeId = 3, City = "Gent", TransportType = "Trein", Comment = "Bezoek aan het Gravesteen is aangeraden door een vriend.",StartTime = DateTime.Parse("2023-03-22 10:30:00"), EndTime = DateTime.Parse("2023-03-22 21:00:00") },
           
                 }
                 },

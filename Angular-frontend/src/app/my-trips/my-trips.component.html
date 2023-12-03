@@ -1,24 +1,57 @@
-  <h1 class="mt-3 ml-4 mb-2 text-center">Uw Trips</h1>
-  <hr width="50%">
-  <div class="addButton">
-    <a routerLink="/tripaanmaken" class="btn add ml-4 btn-lg"><i class="fa-solid fa-plus"></i> Toevoegen</a>
-  </div>
-  <div class="con" *ngIf="trips$ | async as trips">
-    <div class="card mt-4 ml-4" style="width: 23rem;" *ngFor="let t of trips">
-        <img class="card-img-top" src="../../assets/{{t.tripType.id}}.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{ t.name }}</h5>
-          <p class="card-text description">{{ t.tripType.name}} met {{t.activities.length}} activiteiten.</p>
-          <div>
-            <button class="btn mr-3 watch" (click)="detail(t.id)"><i class="fa-solid fa-eye"></i>&nbsp;Bekijk</button>
-            <button href="#" class="btn watch mr-3"><i class="fas fa-globe"></i>&nbsp;Share</button>
-            <button href="#" class="btn trash" (click)="deleteTrip(t.id)"><i class="fas fa-trash"></i>&nbsp;Verwijder</button>
+<h1 class="mt-3 ml-4 mb-2 text-center">Uw Trips</h1>
+<hr width="50%">
+<div class="addButton">
+  <a routerLink="/tripaanmaken" class="btn add ml-4 btn-lg"><i class="fa-solid fa-plus"></i> Toevoegen</a>
+</div>
+<div class="con" *ngIf="trips$ | async as trips">
+  <div class="card mt-4 ml-4" style="width: 23rem;" *ngFor="let t of trips">
+    <img class="card-img-top" src="../../assets/{{t.tripType.id}}.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{ t.name }}</h5>
+      <p class="card-text description">{{ t.tripType.name}} met {{t.activities.length}} activiteiten.</p>
+      <div>
+        <button class="btn mr-3 watch" (click)="detail(t.id)"><i class="fa-solid fa-eye"></i>&nbsp;Bekijk</button>
+        <button href="#" class="btn watch mr-3"><i class="fas fa-globe"></i>&nbsp;Share</button>
+            <button href="#" (click)="setDelete(t.id)" class="btn trash" type="button" data-toggle="modal" data-target="#deleteTripModal"><i
+              class="fas fa-trash"></i>&nbsp;Verwijder</button>
+      </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="deleteTripModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Ben je zeker dat je deze trip wil verwijderen? </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5 class="font-weight-bold">{{selectedTrip?.name}}</h5>
+            <p>Type: {{selectedTrip?.tripType?.name}}</p>
+            <p>Vertrek datum: {{selectedTrip?.departDate | date: 'dd MMMM yyyy'}}</p>
+            <p>Terugkomst datum: {{selectedTrip?.returnDate | date: 'dd MMMM yyyy'}}</p>
+            <p>Locaties: <li *ngFor="let country of selectedTrip?.tripCountries">{{country.cityName}} ({{country.name}})</li>
+            </p>
+            <p *ngIf="selectedTrip?.activities?.length === 0">Er zijn geen activiteiten aan deze trip toegekend.</p>
+            <p *ngIf="selectedTrip?.activities?.length !== 0">Activiteiten: 
+              <li *ngFor="let a of selectedTrip?.activities">{{a.name}}</li>
+            </p>
+          </div>
+          <div class="modal-footer" style="border: none;">
+            <button type="button" class="btn watch" data-dismiss="modal">Annuleer</button>
+            <button type="button" (click)="deleteTrip()" class="btn trash" data-dismiss="modal">Verwijder deze
+              trip</button>
           </div>
         </div>
       </div>
-      <div *ngIf="trips.length === 0">
-        <div class="m-4" style="font-size: x-large;">
-          <p>Je hebt nog geen trips. Maak er snel een aan!</p>
-        </div>
-      </div>
+    </div>
   </div>
+  <div *ngIf="trips.length === 0">
+    <div class="m-4" style="font-size: x-large;">
+      <p>Je hebt nog geen trips. Maak er snel een aan!</p>
+    </div>
+  </div>
+</div>

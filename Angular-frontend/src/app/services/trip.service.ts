@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, tap } from 'rxjs';
 import { Trip } from '../models/api/trip';
-import { TripForm } from '../models/api/createTrip'
+import { TripForm } from '../models/api/create-trip'
 import { TripType } from '../models/api/trip-type';
 
 @Injectable({

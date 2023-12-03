@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class PublicTripsComponent {
   trips$ : Observable<Trip[]> = new Observable<Trip[]>();
 
-  searchString: string = "Bel";
+  searchString: string = "";
 
 
   constructor(private tripService: TripService, private router : Router) {}

@@ -8,9 +8,9 @@ export interface ActivityForm {
     postalCode: string,
     streetName: string,
     streetNr: string,
-    price: string,
-    distance: string,
+    price: number,
+    distance: number,
     comment: string,
-    activityTypeId: number
+    activityTypeId: string
 
 }

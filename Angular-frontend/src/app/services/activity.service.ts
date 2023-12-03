@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ActivityType } from '../models/api/activityType';
-import { ActivityForm } from '../models/api/createActivity';
+import { ActivityType } from '../models/api/activity-type';
+import { ActivityForm } from '../models/api/createactivity';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class ActivityService {
 
   constructor(private http : HttpClient) { }
 
-  // Get ALL sctivity types
+  // Get ALL activity types
   getActivityType() : Observable<ActivityType[]>{
     return this.http.get<ActivityType[]>("https://localhost:6587/api/Activity/Types")
   }

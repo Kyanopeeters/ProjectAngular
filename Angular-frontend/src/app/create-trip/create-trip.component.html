@@ -1,88 +1,119 @@
-<!--Hier komt de nav bar -->
+<!-- nav bar -->
 <div class="container">
-  <h1 class="text-center">Maak een trip aan</h1>
+  <h1 class="text-center m-4 mb-2">Maak een trip aan</h1>
 
-  <form #tripForm="ngForm" (ngSubmit)="onSubmit()">
+  <!-- Form for creating a trip -->
+  <form #tripForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
     <div class="form-row">
       <div class="form-group m-2 col-5">
-        <label for="naamTrip" class="form-label">Naam</label>
+        <label for="naamTrip" class="form-label">Naam *</label>
         <input type="text" class="form-control" id="naamTrip" name="naamTrip" [(ngModel)]="trip.name" #name="ngModel"
           placeholder="Geef je trip een naam" required>
-      </div>
+          <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Naam is verplicht</div>
+        </div>
 
       <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType">
-        <label for="typeTrip">Soort trip</label>
-        <select id="typeTrip" class="form-control" required [(ngModel)]="trip.tripTypeId" #tripTypeId="ngModel"
-          name="typeTrip">
-          <option selected disabled>Welke soort trip ga je maken?</option>
+        <label for="typeTrip">Soort trip *</label>
+        <select id="typeTrip" name="typeTrip" class="form-control" [(ngModel)]="trip.tripTypeId" #tripTypeId="ngModel"
+          required>
+          <option disabled selected >Welke soort trip ga je maken?</option>
           <option *ngFor="let type of tripType" [value]="type.id">{{ type.name }}</option>
         </select>
+        <div [hidden]="tripTypeId.value || tripTypeId.pristine" class="alert alert-danger" role="alert">
+          Selecteer een soort trip.
+        </div>
       </div>
 
     </div>
     <div class="w-100"></div>
     <div class="form-row">
       <div class="form-group m-2 col-5">
-        <label for="vertrekDatumTrip">Vertrek datum</label>
+        <label for="vertrekDatumTrip">Vertrekdatum *</label>
         <input type="datetime-local" name="vertrekDatumTrip" class="form-control" id="vertrekDatumTrip"
           [(ngModel)]="trip.departDate" #departDate="ngModel" required>
-      </div>
+          <div [hidden]="departDate.valid || departDate.pristine" class="alert alert-danger">
+            Vertrek datum is verplicht.
+          </div>
+          <div *ngIf="trip.departDate > trip.returnDate" class="alert alert-danger">
+            Vertrekdatum moet eerder zijn dan de terugkomstdatum.
+          </div>
+        </div>
+
       <div class="form-group m-2 col-5">
-        <label for="terugkomstDatumTrip">Terugkomst datum</label>
+        <label for="terugkomstDatumTrip">Terugkomstdatum *</label>
         <input type="datetime-local" name="terugkomstDatumTrip" class="form-control" id="terugkomstDatumTrip"
           [(ngModel)]="trip.returnDate" #returnDate="ngModel" required>
       </div>
+      <div [hidden]="returnDate.valid || returnDate.pristine" class="alert alert-danger">
+        Terugkomst datum is verplicht.
+      </div>
     </div>
     <div class="w-100"></div>
 
     <div class="form-row">
       <div class="form-group m-2 col-5">
-        <label for="stadTrip">Stad</label>
+        <label for="stadTrip">Stad *</label>
         <input type="text" class="form-control" id="stadTrip" [(ngModel)]="selectedCountry.cityName" #cityName="ngModel"
-          name="cityName" placeholder="Naar welke stad ga je op je trip?">
-      </div>
+          name="cityName" placeholder="Naar welke stad ga je op je trip?" required>
+          <div [hidden]="cityName.valid || cityName.pristine" class="alert alert-danger">
+            Stad is verplicht.
+          </div>
+        </div>
 
       <div class="form-group m-2 col-5" *ngIf="tripCountry$ | async as tripCountry">
-        <label for="landTrip">Land</label>
-        <select [(ngModel)]="selectedCountryId" name="countryName" class="form-control">
+        <label for="landTrip">Land *</label>
+        <select [(ngModel)]="selectedCountryId" name="countryName" class="form-control" required >
           <option *ngFor="let country of tripCountry" [value]="country.id">
             {{ country.name }}
           </option>
         </select>
-
+        <div [hidden]="selectedCountryId !== null" class="alert alert-danger">
+          Land is verplicht.
+        </div>
       </div>
       <br>
-    
-      <div class="form-group m-2 col-5">
-        <label for="isPublicCheckbox" class="mr-2">Is Publiek?</label>
-        <input type="checkbox" id="isPublicCheckbox" [(ngModel)]="trip.isPublic" name="isPublic">
-      </div>
-      <div class="align-self-end m-2 col-5">
-        <button type="button" class="btn btn-outline-info" (click)="addNewLocationFields()">Extra locaties toevoegen</button>
-      </div>
     </div>
 
-    <div class="form-row">
-      <div *ngFor="let location of trip.country; let i = index">
+    <!-- Extra fields for location -->
+    <div *ngFor="let location of trip.country; let i = index">
+      <div class="form-row">
         <div class="form-group m-2 col-5">
-          <label for="city{{i}}">Stad</label>
-          <input type="text" class="form-control" id="city{{i}}" name="city{{i}}" [(ngModel)]="trip.country[i].cityName">
+          <label for="cityTrip{{i}}">Stad *</label>
+          <input type="text" class="form-control" id="cityTrip{{i}}" name="cityTrip{{i}}"
+            [(ngModel)]="trip.country[i].cityName" #cityName="ngModel" required>
+            <div [hidden]="cityName.valid || cityName.pristine" class="alert alert-danger">
+              Stad is verplicht.
+            </div>
         </div>
-    
+
         <div class="form-group m-2 col-5">
-          <label for="country{{i}}">Land</label>
-          <select class="form-control" [id]="'country' + i" name="country{{i}}" [(ngModel)]="trip.country[i].countryId">
+          <label for="country{{i}}">Land *</label>
+          <select class="form-control" [id]="'country' + i" name="country{{i}}" [(ngModel)]="trip.country[i].countryId" required>
             <option *ngFor="let country of tripCountry$ | async" [value]="country.id">
               {{ country.name }}
             </option>
           </select>
+          <div [hidden]="selectedCountryId !== null" class="alert alert-danger">
+            Land is verplicht.
+          </div>
         </div>
       </div>
     </div>
 
-    <hr class="dashed">
+    
+    <div class="form-row">
+      <div class="form-group m-2 col-5">
+        <label for="isPublicCheckbox" class="mr-2">Is Publiek?</label>
+        <input type="checkbox" id="isPublicCheckbox" [(ngModel)]="trip.isPublic" name="isPublic">
+      </div>
+      <!-- Button for adding extra fields for location -->
+      <div class="align-self-end m-2 col-5">
+        <button type="button" class="btn btn-outline-info" (click)="addNewLocationFields()">Extra locaties
+          toevoegen</button>
+      </div>
+    </div>
 
-    <input type="submit" class="btn btn-outline-info btn-lg" value="Trip opslaan" />
+    <!-- Submit button -->
+    <input type="submit" [disabled]="tripForm.invalid || tripForm.pristine || trip.departDate > trip.returnDate" class="btn btn-outline-info btn-md m-2 mt-4" value="Trip opslaan" />
   </form>
-
   <script src="../create-trip/create-trip.component.ts"></script>

@@ -46,10 +46,11 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var tripContext = scope.ServiceProvider.GetRequiredService<TripPlannerDbContext>();
-//    DBInitializer.Initialize(tripContext);
-//}
+/*using (var scope = app.Services.CreateScope())
+{
+    var tripContext = scope.ServiceProvider.GetRequiredService<TripPlannerDbContext>();
+    DBInitializer.Initialize(tripContext);
+}
+*/
 
 app.Run();

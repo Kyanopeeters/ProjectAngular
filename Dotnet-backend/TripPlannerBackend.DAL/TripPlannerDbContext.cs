@@ -45,7 +45,11 @@ namespace TripPlannerBackend.DAL
                 .IsRequired();
 
             modelBuilder.Entity<TripCountry>()
-                .HasKey(tl => new { tl.TripId, tl.CountryId });
+             .HasKey(tl => tl.Id);
+
+            modelBuilder.Entity<TripCountry>()
+                .HasIndex(tl => tl.Id)  
+                .IsUnique();
 
             modelBuilder.Entity<TripCountry>()
                 .HasOne(tl => tl.Trip)

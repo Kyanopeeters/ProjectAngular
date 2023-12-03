@@ -13,6 +13,6 @@ export class CountryService {
 
     //get ALL countries
     getCountries() : Observable<Country[]>{
-      return this.http.get<Country[]>("https://localhost:6587/api/Country");
+      return this.http.get<Country[]>("https://tripplannerbackendapi20231127181332.azurewebsites.net/api/Country");
     }
 }

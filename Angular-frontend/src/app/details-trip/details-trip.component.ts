@@ -90,11 +90,7 @@ export class DetailsTripComponent implements OnInit{
     var dateArray = new Array();
     var result = new Date(startDate);
     var stopDateFormat = new Date(stopDate)
-    console.log(startDate)
-    console.log(result)
-    console.log(stopDate)
     while (result <= stopDateFormat) {
-      console.log(result)
       dateArray.push(new Date (result));
       result.setDate(result.getDate() + 1)
     }

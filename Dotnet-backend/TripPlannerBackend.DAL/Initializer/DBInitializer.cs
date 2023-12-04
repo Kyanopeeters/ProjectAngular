@@ -38,6 +38,9 @@ namespace TripPlannerBackend.DAL.Initializer
                     new ActivityType(){Name="Cultuur activiteit"},
                     new ActivityType(){Name="Sport activiteit"},
                     new ActivityType(){Name="Natuur onderdompeling"},
+                    new ActivityType(){Name="Andere"},
+                    new ActivityType(){Name="Eten/Drinken"},
+                    new ActivityType(){Name="Winkelen"}
                 };
 
                 foreach (ActivityType t in activitytypes)
@@ -62,18 +65,28 @@ namespace TripPlannerBackend.DAL.Initializer
                 }
                 },
                 new Trip {
-                    Name = "Trip België",UserId = "auth0|655f9d5c022a9fc3be9f4315", TripTypeId= 2,DepartDate = DateTime.Parse("2023-03-20"), ReturnDate = DateTime.Parse("2023-03-26"), IsPublic = true, Activities = new List<Activity>()
+                    Name = "Trip België",UserId = "auth0|655f9d5c022a9fc3be9f4315", TripTypeId= 2,DepartDate = DateTime.Parse("2023-03-20"), ReturnDate = DateTime.Parse("2023-03-24"), IsPublic = true, Activities = new List<Activity>()
                 {
-                    new Activity(){Name ="Bezoek Rubenshuis", ActivityTypeId = 2, City = "Antwerpen", Price = 20, StartTime = DateTime.Parse("2023-03-20 10:30:00"), EndTime = DateTime.Parse("2023-03-20 12:00:00")},
-                    new Activity(){ Name = "Dagje Gent", ActivityTypeId = 3, City = "Gent", TransportType = "Trein", Comment = "Bezoek aan het Gravesteen is aangeraden door een vriend.",StartTime = DateTime.Parse("2023-03-22 10:30:00"), EndTime = DateTime.Parse("2023-03-22 21:00:00") },
-          
+                    new Activity(){Name ="Autorit naar Antwerpen", ActivityTypeId = 1, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-20 12:30:00"), EndTime = DateTime.Parse("2023-03-20 14:00:00")},
+                    new Activity(){Name ="Check-in bij hotel", ActivityTypeId = 6, City = "Antwerpen", Comment="Hotel Rubens, Grote Markt", StartTime = DateTime.Parse("2023-03-20 15:00:00"), EndTime = DateTime.Parse("2023-03-20 15:30:00")},
+                    new Activity(){Name ="Verken directe omgeving", ActivityTypeId = 3, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-20 16:00:00"), EndTime = DateTime.Parse("2023-03-20 18:00:00")},
+                    new Activity(){Name ="Diner in Elfde Gebod", ActivityTypeId = 7, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-20 18:00:00"), EndTime = DateTime.Parse("2023-03-20 20:30:00")},
+                    new Activity(){Name ="Bezoek aan het Rubenshuis", ActivityTypeId = 2, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-21 09:00:00"), EndTime = DateTime.Parse("2023-03-21 10:15:00")},
+                    new Activity(){Name ="Bezoek aan het MAS", ActivityTypeId = 2, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-21 10:30:00"), EndTime = DateTime.Parse("2023-03-21 11:15:00")},
+                    new Activity(){Name ="Winkelen op de Meir", ActivityTypeId = 8, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-21 15:00:00"), EndTime = DateTime.Parse("2023-03-21 17:00:00")},
+                    new Activity(){Name = "Dagje Gent", ActivityTypeId = 3, City = "Gent", TransportType = "Trein", Comment = "Bezoek aan het Gravesteen is aangeraden door een vriend.",StartTime = DateTime.Parse("2023-03-22 10:30:00"), EndTime = DateTime.Parse("2023-03-22 21:00:00") },
+                    new Activity(){Name ="Bezoek Antwerpse Zoo", ActivityTypeId = 5, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-23 09:00:00"), EndTime = DateTime.Parse("2023-03-23 12:00:00")},
+                    new Activity(){Name ="Centraal Station ontdekken", ActivityTypeId = 3, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-23 13:00:00"), EndTime = DateTime.Parse("2023-03-23 13:45:00")},
+                    new Activity(){Name ="Wandeling in Park Spoor Noord", ActivityTypeId = 5, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-23 14:00:00"), EndTime = DateTime.Parse("2023-03-23 16:00:00")},
+                    new Activity(){Name ="Uitchecken + vertrek", ActivityTypeId = 6, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-24 08:00:00"), EndTime = DateTime.Parse("2023-03-24 10:00:00")},
+
                 }
                 },
                 new Trip {
                     Name = "Trip Frankrijk", UserId = "auth0|655b48b2c90bf30f6a12291a", TripTypeId= 3,DepartDate = DateTime.Parse("2024-02-01"), ReturnDate = DateTime.Parse("2024-02-10"), IsPublic = true, Activities = new List<Activity>()
                 {
-                    new Activity(){Name="Boswandeling", ActivityTypeId = 5},
-                    new Activity(){ Name = "Kajakken op de rivier", ActivityTypeId = 4, TransportType = "Kajak", Price = 25, Distance = 30,  },
+                    new Activity(){Name="Boswandeling", ActivityTypeId = 5, StartTime = DateTime.Parse("2024-02-02 10:30:00"), EndTime = DateTime.Parse("2024-02-02 12:00:00")},
+                    new Activity(){ Name = "Kajakken op de rivier", ActivityTypeId = 4, TransportType = "Kajak", Price = 25, Distance = 30, StartTime = DateTime.Parse("2024-02-09 12:30:00"), EndTime = DateTime.Parse("2024-02-09 18:00:00")},
         
                 }
                 },

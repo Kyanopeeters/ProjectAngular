@@ -31,7 +31,7 @@ app.UseCors(options =>
 {
     options.AllowAnyHeader();
     options.AllowAnyMethod();
-    options.WithOrigins("http://localhost:4200", "https://localhost:4200");
+    options.WithOrigins("http://localhost:4200", "https://localhost:4200", "https://project-angular-two.vercel.app");
 });
 
 

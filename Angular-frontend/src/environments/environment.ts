@@ -4,5 +4,5 @@ export const environment = {
     AUTH0_CLIENT_ID: "LqeDSwhDC6fueyZ6hn9RylXKBYDDZPZH",
     redirectUri: "https://project-angular-two.vercel.app/",
     api_url: "https://tripplannerbackendapi20231127181332.azurewebsites.net/api",
-    AUTH0_AUDIENCE: "https://tripplannerbackendapi20231127181332.azurewebsites.net"
+    AUTH0_AUDIENCE: "https://tripplannerbackendapi20231127181332.azurewebsites.net/api"
 };

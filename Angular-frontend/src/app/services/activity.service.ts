@@ -3,17 +3,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivityType } from '../models/api/activity-type';
 import { ActivityForm } from '../models/api/create-activity';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
 
+  api_url = environment.api_url;
+
   constructor(private http : HttpClient) { }
 
   // Get ALL activity types
   getActivityType() : Observable<ActivityType[]>{
-    return this.http.get<ActivityType[]>("https://tripplannerbackendapi20231127181332.azurewebsites.net/api/Activity/Types")
+    return this.http.get<ActivityType[]>( this.api_url + "/Activity/Types")
   }
 
   // POST activity
@@ -21,6 +24,6 @@ export class ActivityService {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
 
-    return this.http.post<ActivityForm>("https://tripplannerbackendapi20231127181332.azurewebsites.net/api/Activity/create" , newActivity , {headers: headers});
+    return this.http.post<ActivityForm>(this.api_url + "/Activity/create" , newActivity , {headers: headers});
   }
 }

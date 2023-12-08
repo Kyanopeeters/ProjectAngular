@@ -12,7 +12,7 @@
           <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Naam is verplicht</div>
       </div>
 
-
+      <!-- tripType fields -->
       <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType">
         <label for="typeTrip">Soort trip *</label>
         <select id="typeTrip" name="typeTrip" class="form-control" [(ngModel)]="trip.tripType.id" #tripTypeId="ngModel"

@@ -41,7 +41,7 @@ namespace TripPlannerBackend.API.Controllers
 
         //Get activity By ID
         [HttpGet("{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<GetActivityDto>> GetActivity(int id)
         {
 
@@ -60,7 +60,7 @@ namespace TripPlannerBackend.API.Controllers
 
         // Create an activity
         [HttpPost("create")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<GetActivityDto>> AddActivity(CreateActivityDto activity)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -78,6 +78,8 @@ namespace TripPlannerBackend.API.Controllers
         //[Authorize]
         public async Task<IActionResult> DeleteActivity(int id)
         {
+            // Get de userId
+            //string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             // Get the activity
             var activity = await _context.Activities.Where(t => t.Id == id)

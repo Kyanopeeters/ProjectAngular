@@ -14,7 +14,8 @@
 
                 <div class="form-group m-2 pl-2 col-5" *ngIf="activityType$ | async as activityType">
                     <label for="typeActiviteit">Activiteit type *</label>
-                    <select id="typeActiviteit" class="form-control" name="activityType" [(ngModel)]="activity.activityTypeId" required>
+                    <select id="typeActiviteit" class="form-control" name="activityType"
+                        [(ngModel)]="activity.activityTypeId" required>
                         <option disabled selected>
                             Selecteer een activiteitstype
                         </option>
@@ -22,102 +23,101 @@
                             {{ type.name }}
                         </option>
                     </select>
-                    
-                    <div [hidden]="activity.activityTypeId || activity.activityTypeId == 0" class="alert alert-danger">Activiteitstype is verplicht</div>
-            </div> 
 
-
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group m-2 pl-2 col-5">
-                        <label for="activiteitBegintijd">Begintijd</label>
-                        <input type="datetime-local" id="activiteitBegintijd" class="form-control"
-                            [(ngModel)]="activity.startTime" #startTime="ngModel" name="startTime" />
-                    </div>
-                    <div class="form-group m-2 pl-2 col-5">
-                        <label for="activiteitEindtijd">Eindtijd</label>
-                        <input type="datetime-local" id="activiteitEindtijd" class="form-control"
-                            [(ngModel)]="activity.endTime" #endTime="ngModel" name="endTime" />
-                    </div>
-
-                    <div *ngIf="activity.startTime > activity.endTime" class="alert alert-danger">
-                        Starttijd moet eerder zijn dan de eindtijd.
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group m-2 pl-2 col-5">
-                        <label for="activiteitGemeente">Gemeente</label>
-                        <input type="text" id="activiteitGemeente" class="form-control" [(ngModel)]="activity.city"
-                            #city="ngModel" name="city" />
-                    </div>
-                    <div class="form-group m-2 pl-2 col-5">
-                        <label for="activiteitPostcode">Postcode</label>
-                        <input type="text" id="activiteitPostcode" class="form-control"
-                            [(ngModel)]="activity.postalCode" #postalCode="ngModel" name="postalCode" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-5 m-2 pl-2">
-                        <label for="activiteitStraat">Straatnaam</label>
-                        <input type="text" id="activiteitStraat" class="form-control" [(ngModel)]="activity.streetName"
-                            #streetName="ngModel" name="streetName" />
-                    </div>
-                    <div class="form-group col-5 m-2 pl-2">
-                        <label for="activiteitHuisnummer">Huisnummer</label>
-                        <input type="text" id="activiteitHuisnummer" class="form-control"
-                            [(ngModel)]="activity.streetNr" #streetNr="ngModel" name="streetNr" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-5 m-2 pl-2">
-                        <label for="activiteitAfstand" class="form-label">Afstand</label>
-
-                        <div class="input-group mb-3">
-                            <input id="activiteitAfstand" type="number" min="0" class="form-control"
-                                [(ngModel)]="activity.distance" #distance="ngModel" name="distance" />
-
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">km</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-5 m-2 pl-2">
-                        <label for="activiteitPrijs" class="form-label">Prijs</label>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">€</span>
-                            </div>
-                            <input id="activiteitPrijs" type="number" min="0" class="form-control"
-                                [(ngModel)]="activity.price" #price="ngModel" name="price" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group m-2 col-5 pl-2">
-                        <label for="activiteitVervoersmiddel">Vervoersmiddel</label>
-                        <input type="text" id="activiteitVervoersmiddel" class="form-control"
-                            [(ngModel)]="activity.transportType" #transportType="ngModel" name="transportType" />
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group m-2 col-10 pl-2">
-                        <label for="activiteitOpmerkingen">Opmerkingen</label>
-                        <textarea class="form-control" id="activiteitOpmerkingen" rows="4"
-                            [(ngModel)]="activity.comment" #comment="ngModel" name="comment"></textarea>
-                    </div>
-                </div>
-                <div>
-                    <input type="submit" class="btn btn-outline-info m-2 mt-4" value="Activiteit opslaan" />
-                    <!-- [disabled]="editActivityForm.invalid || editActivityForm.pristine || activity.startTime > activity.endTime"  -->
-                    <a (click)="back()" class="btn btn-outline-secondary mr-3 ml-4 mt-3"><i
-                            class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
+                    <div [hidden]="activity.activityTypeId || activity.activityTypeId == 0" class="alert alert-danger">
+                        Activiteitstype is verplicht</div>
                 </div>
             </div>
+
+            <div class="form-row">
+                <div class="form-group m-2 pl-2 col-5">
+                    <label for="activiteitBegintijd">Begintijd</label>
+                    <input type="datetime-local" id="activiteitBegintijd" class="form-control"
+                        [(ngModel)]="activity.startTime" #startTime="ngModel" name="startTime" />
+                </div>
+                <div class="form-group m-2 pl-2 col-5">
+                    <label for="activiteitEindtijd">Eindtijd</label>
+                    <input type="datetime-local" id="activiteitEindtijd" class="form-control"
+                        [(ngModel)]="activity.endTime" #endTime="ngModel" name="endTime" />
+                </div>
+
+                <div *ngIf="activity.startTime > activity.endTime" class="alert alert-danger">
+                    Starttijd moet eerder zijn dan de eindtijd.
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group m-2 pl-2 col-5">
+                    <label for="activiteitGemeente">Gemeente</label>
+                    <input type="text" id="activiteitGemeente" class="form-control" [(ngModel)]="activity.city"
+                        #city="ngModel" name="city" />
+                </div>
+                <div class="form-group m-2 pl-2 col-5">
+                    <label for="activiteitPostcode">Postcode</label>
+                    <input type="text" id="activiteitPostcode" class="form-control" [(ngModel)]="activity.postalCode"
+                        #postalCode="ngModel" name="postalCode" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-5 m-2 pl-2">
+                    <label for="activiteitStraat">Straatnaam</label>
+                    <input type="text" id="activiteitStraat" class="form-control" [(ngModel)]="activity.streetName"
+                        #streetName="ngModel" name="streetName" />
+                </div>
+                <div class="form-group col-5 m-2 pl-2">
+                    <label for="activiteitHuisnummer">Huisnummer</label>
+                    <input type="text" id="activiteitHuisnummer" class="form-control" [(ngModel)]="activity.streetNr"
+                        #streetNr="ngModel" name="streetNr" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-5 m-2 pl-2">
+                    <label for="activiteitAfstand" class="form-label">Afstand</label>
+
+                    <div class="input-group mb-3">
+                        <input id="activiteitAfstand" type="number" min="0" class="form-control"
+                            [(ngModel)]="activity.distance" #distance="ngModel" name="distance" />
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">km</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-5 m-2 pl-2">
+                    <label for="activiteitPrijs" class="form-label">Prijs</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">€</span>
+                        </div>
+                        <input id="activiteitPrijs" type="number" min="0" class="form-control"
+                            [(ngModel)]="activity.price" #price="ngModel" name="price" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group m-2 col-5 pl-2">
+                    <label for="activiteitVervoersmiddel">Vervoersmiddel</label>
+                    <input type="text" id="activiteitVervoersmiddel" class="form-control"
+                        [(ngModel)]="activity.transportType" #transportType="ngModel" name="transportType" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group m-2 col-10 pl-2">
+                    <label for="activiteitOpmerkingen">Opmerkingen</label>
+                    <textarea class="form-control" id="activiteitOpmerkingen" rows="4" [(ngModel)]="activity.comment"
+                        #comment="ngModel" name="comment"></textarea>
+                </div>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-outline-info m-2 mt-4" value="Activiteit opslaan" 
+                [disabled]="activity.startTime > activity.endTime" /> 
+                <a (click)="back()" class="btn btn-outline-secondary mr-3 ml-4 mt-3"><i
+                        class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
+            </div>
+        </div>
     </form>
 </div>

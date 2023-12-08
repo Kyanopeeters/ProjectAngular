@@ -21,15 +21,9 @@ export class EditActivityComponent implements OnInit {
 
   activityType$: Observable<ActivityType[]> = new Observable<ActivityType[]>()
 
-  // activityId = +this.route.snapshot.paramMap.get('id')!;
-
-
-  // activityYeah = this.activityService.getActivityById(this.activityId)
-
   startTime: Date = new Date;
   endTime: Date = new Date;  
   tripTypeId: number = 0;
-
 
 
   ngOnInit(): void {
@@ -71,17 +65,11 @@ export class EditActivityComponent implements OnInit {
     comment: "",
     activityTypeId: this.tripTypeId,
     activityType: {id: this.tripTypeId, name:""}
-
-
   }
 
   onSubmit() {
-    // get the activityId and assign userId
     const activityId = +this.route.snapshot.paramMap.get('id')!;
     try {
-
-      // this.trip.tripTypeId = this.trip.tripType.id
-      // console.log(this.trip.tripCountries)
 
       this.activityService.updateActivityById(activityId, this.activity).subscribe(
         editedActivity => {
@@ -102,9 +90,5 @@ export class EditActivityComponent implements OnInit {
   back(): void {
     this.location.back()
   }
-
-
-
-
 
 }

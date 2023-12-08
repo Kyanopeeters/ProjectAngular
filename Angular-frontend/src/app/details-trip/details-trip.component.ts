@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { PdfService } from '../services/pdf.service';
 import { WeatherModalComponent } from '../weather-modal/weather-modal.component';
 import { MatDialog} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule} from '@angular/material/button';
 import { DetailsActivityDialogComponent } from '../details-activity-dialog/details-activity-dialog.component';
 import { Activity } from '../models/api/activity';
 

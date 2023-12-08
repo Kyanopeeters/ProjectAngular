@@ -9,6 +9,7 @@ import {
 import {MatButtonModule} from '@angular/material/button';
 import { DeleteActivityDialogComponent } from '../delete-activity-dialog/delete-activity-dialog.component';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-details-activity-dialog',
@@ -20,7 +21,7 @@ import { UserService } from '../services/user.service';
 export class DetailsActivityDialogComponent {
   userId : string = "";
 
-  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog) {}
+  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog, private router : Router) {}
 
  
   ngOnInit() : void {
@@ -32,6 +33,11 @@ export class DetailsActivityDialogComponent {
         console.error('error', error);
       }
     )
+  }
+  
+  updateActivityById(id: number, activity:Activity)
+  {
+    this.router.navigate(['/activiteitbewerken', id]);
   }
 
 

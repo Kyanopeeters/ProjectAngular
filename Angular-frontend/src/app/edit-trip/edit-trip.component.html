@@ -1,11 +1,12 @@
 <div class="container">
-  <h1 class="text-center m-4 mb-2">Bewerk je trip</h1>
+  <h1 class="text-center">Bewerk je "{{trip.name}}" trip</h1>
+
   <form #EditTripForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-row">
 
       <!-- name fields -->
       <div class="form-group m-2 col-5">
-        <label for="naamTrip">Naam</label>
+        <label for="naamTrip">Naam *</label>
         <input type="text" class="form-control" id="naamTrip" placeholder="Geef je trip een nieuwe naam" required
           [(ngModel)]="trip.name" name="naamTrip" #name="ngModel">
           <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Naam is verplicht</div>
@@ -29,7 +30,7 @@
     <div class="form-row">
       <!-- depart date fields-->
       <div class="form-group m-2 col-5">
-        <label for="vertrekDatumTrip">Vertrek datum</label>
+        <label for="vertrekDatumTrip">Vertrek datum *</label>
         <input type="datetime-local" class="form-control" id="vertrekDatumTrip" name="vertrekDatumTrip" required
           [(ngModel)]="trip.departDate" #vertrekDatumTrip="ngModel">
           <div [hidden]="vertrekDatumTrip.valid || vertrekDatumTrip.pristine" class="alert alert-danger">
@@ -42,7 +43,7 @@
 
       <!-- return date fields-->
       <div class="form-group m-2 col-5">
-        <label for="terugkomstDatumTrip">Terugkomst datum</label>
+        <label for="terugkomstDatumTrip">Terugkomst datum *</label>
         <input type="datetime-local" class="form-control" id="terugkomstDatumTrip" [(ngModel)]="trip.returnDate"
           name="terugkomstDatumTrip" #terugkomstDatumTrip="ngModel">
           <div [hidden]="terugkomstDatumTrip.valid || terugkomstDatumTrip.pristine" class="alert alert-danger">
@@ -70,12 +71,12 @@
             {{ country.name }}
           </option>
         </select>
-        <div [hidden]="location.countryId !== null" class="alert alert-danger">
+        <div [hidden]="location.countryId !== 0 || location.countryId" class="alert alert-danger">
           Land is verplicht.
         </div>
       </div>
     </div>
-    
+
   
     <!-- ispublic field-->
     <div class="form-row">
@@ -94,7 +95,9 @@
 
     <!-- submit form -->
     <div class="pt-5">
-      <input type="submit" class="btn btn-outline-info btn-lg" value="Trip bewerken" />
+      <input type="submit" class="btn btn-outline-info" value="Trip bewerken" />
+      <a (click)="back()" class="btn btn-outline-secondary ml-4 "><i
+        class="fa-solid fa-rotate-left "></i>&nbsp;Terug</a>
     </div>
 
   </form>

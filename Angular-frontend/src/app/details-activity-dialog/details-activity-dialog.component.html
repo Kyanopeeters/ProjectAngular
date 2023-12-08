@@ -23,7 +23,9 @@
 
     @if( data.userId === userId ) {
     <mat-dialog-actions align="end">
-    <button class="btn gen"><i class="fa-solid fa-pen-to-square"></i> Bewerk</button>
+    <button               
+    (click)="updateActivityById(data.activity.id, data.activity)"
+    class="btn gen"><i class="fa-solid fa-pen-to-square"></i> Bewerk</button>
     <button class="btn trash" mat-dialog-close (click)="openDialog(data.activity)"><i class="fas fa-trash"></i> Verwijder</button>
     </mat-dialog-actions>
     }

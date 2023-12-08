@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { TripService } from '../services/trip.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -38,6 +38,7 @@ export class EditTripComponent implements OnInit {
     private activityService: ActivityService,
     private router: Router,
     private userService: UserService,
+    private location: Location
   ) { }
 
 
@@ -178,5 +179,9 @@ export class EditTripComponent implements OnInit {
         this.nextAvailableId--;
       }
       console.log(this.nextAvailableId)
+    }
+
+    back(): void {
+      this.location.back()
     }
 }

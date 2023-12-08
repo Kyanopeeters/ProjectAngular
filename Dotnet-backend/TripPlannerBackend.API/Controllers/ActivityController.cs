@@ -41,7 +41,7 @@ namespace TripPlannerBackend.API.Controllers
 
         //Get activity By ID
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<GetActivityDto>> GetActivity(int id)
         {
 

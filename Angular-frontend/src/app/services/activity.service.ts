@@ -15,6 +15,12 @@ export class ActivityService {
 
   constructor(private http : HttpClient) { }
 
+    // Get activity by ID
+
+  getActivityById(id : number) : Observable<Activity> {
+    return this.http.get<Activity>(this.api_url + "/Activity/" + id);
+  }
+
   // Get ALL activity types
   getActivityType() : Observable<ActivityType[]>{
     return this.http.get<ActivityType[]>(this.api_url + "/Activity/Types")
@@ -29,11 +35,11 @@ export class ActivityService {
 
 //   Delete activity
   deleteActivity(id: number): Observable<Activity>{
-    return this.http.delete<Activity> (this.api_url + "/Activity/" + id)
-}
+    return this.http.delete<Activity> (this.api_url + "/Activity/" + id)};
 
   //PUT Activity 
-updateTripById(id : number, activity:Activity) : Observable<Activity> {
-  return this.http.put <Activity> (this.api_url + "/Activity/" + id, activity);
-}
+  updateActivityById(id : number, activity:Activity) : Observable<Activity> {
+    return this.http.put <Activity> (this.api_url + "/Activity/" + id, activity);
+  }
+
 }

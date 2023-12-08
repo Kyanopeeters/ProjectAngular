@@ -1,9 +1,9 @@
 import { ActivityType } from "./activity-type";
 
-export interface Activity {
+export interface EditActivityForm {
     id: number,
     name: string, 
-    activityType: ActivityType, 
+    activityTypeId: number, 
     comment: string,
     startTime: Date,
     endTime: Date,
@@ -16,6 +16,5 @@ export interface Activity {
     price: number,
     distance: number,
     tripId: number,
-    activityTypeId:number
-
+    activityType:ActivityType
 }

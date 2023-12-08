@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Trip } from '../models/api/trip';
 import { TripService } from '../services/trip.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Observable, count } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Country } from '../models/api/country';
 import { ActivityType } from '../models/api/activity-type';
 import { TripType } from '../models/api/trip-type';
 import { CountryService } from '../services/country.service';
 import { ActivityService } from '../services/activity.service';
-
-
+import { Router } from '@angular/router';
+import { EditTripForm } from '../models/api/edit-trip';
+import { UserService } from '../services/user.service';
+import { EditCountryForm } from '../models/api/edit-country';
 
 
 
@@ -24,21 +25,38 @@ import { ActivityService } from '../services/activity.service';
 })
 export class EditTripComponent implements OnInit {
 
-  constructor(
-    private tripService:TripService, 
-    private route: ActivatedRoute, 
-    private countryService: CountryService, 
-    private activityService: ActivityService){}
+  userIdData: string = "";
+  nextAvailableId: number = 0;
 
-  trip?: Trip;
+  selectedCountry: EditCountryForm = { id: 0, cityName: '', countryId:0 ,  name: ''};
+  
+
+  constructor(
+    private tripService: TripService,
+    private route: ActivatedRoute,
+    private countryService: CountryService,
+    private activityService: ActivityService,
+    private router: Router,
+    private userService: UserService,
+  ) { }
+
+
   tripType$: Observable<TripType[]> = new Observable<TripType[]>()
   tripCountry$: Observable<Country[]> = new Observable<Country[]>()
   tripActivityType$: Observable<ActivityType[]> = new Observable<ActivityType[]>()
 
 
-  newCountries:EditTripComponent[] =[];
-  newParticipants:EditTripComponent[] =[];
-  newActivities:EditTripComponent[] =[];
+  newCountries: EditTripComponent[] = [];
+  tripId = +this.route.snapshot.paramMap.get('id')!;
+
+  departdate: Date = new Date;
+  returnDate: Date = new Date;
+  tripTypeId: number = 0;
+  tripCountryId: number = 0;
+  idTripType: number = 0;
+  cityName: string = '';
+
+  tripTypes: TripType[] = [];
 
 
   ngOnInit(): void {
@@ -46,29 +64,119 @@ export class EditTripComponent implements OnInit {
     this.tripCountry$ = this.countryService.getCountries();
     this.tripActivityType$ = this.activityService.getActivityType();
 
-
     const tripId = +this.route.snapshot.paramMap.get('id')!;
     this.tripService.getTripById(tripId).subscribe((trip) => {
-      console.log(trip.tripCountries)
-      this.trip = trip 
+
+      this.trip = trip
+      this.departdate = trip.departDate
+      this.returnDate = trip.returnDate
+      console.log("trip")
+      console.log(trip)
+
     });
+
+    this.userService.whoIsLoggedIn().subscribe(
+      (sub) => {
+        this.userIdData = sub;
+      },
+      (error) => {
+        console.error('error', error);
+      }
+    )
+  }
+
+  trip: EditTripForm = {
+    id: this.tripId,
+    userId: this.userIdData,
+    name: "",
+    departDate: this.departdate,
+    returnDate: this.returnDate,
+    isPublic: false,
+    tripType: { id: this.idTripType, name: '' },
+    tripTypeId: this.idTripType,
+    tripCountries: [{id: 0, cityName: this.cityName, countryId: 0, name: this.cityName}],
+    activities: [],
+    guidLink: '',
+
   }
 
 
-  
 
+  onSubmit() {
+    // get the tripID and assign userId
+    const tripId = +this.route.snapshot.paramMap.get('id')!;
+    this.trip.userId = this.userIdData;
 
+    try {
+      this.addNewCountry();
 
-  addNewCountry(){
-   // this.newCountries.push(new EditTripComponent())
+      this.trip.tripTypeId = this.trip.tripType.id
+      console.log(this.trip.tripCountries)
+
+      this.tripService.updateTripById(tripId, this.trip).subscribe(
+        editedTrip => {
+          console.log('Trip updated successfully:', editedTrip);
+          this.router.navigate(['/trip', tripId]);
+        },
+
+        error => {
+          console.error('Failed to update trip:', error);
+        }
+      );
+    }
+    catch (error) {
+      console.error('Failed to update trip:', error);
+    }
   }
 
-  addNewParticipant(){
-   // this.newParticipants.push(new EditTripComponent())
+  checkoutForm: EditTripForm = {
+    id: this.tripId,
+    name: this.trip.name,
+    userId: this.userIdData,
+    tripType: { id:  this.tripTypeId
+      , name: '' },
+    departDate: this.departdate,
+    returnDate: this.returnDate,
+    tripTypeId: 0,
+    tripCountries: [],
+    isPublic: this.trip.isPublic,
+    activities: [],
+    guidLink: ''
+
   }
 
-  addNewActivity(){
-   // this.newActivities.push(new EditTripComponent())
+
+  addNewCountry() {
+    this.checkoutForm.tripCountries.push({
+      id: this.selectedCountry.id,
+      cityName: this.selectedCountry.cityName,
+      countryId: this.selectedCountry.countryId,
+      name:this.selectedCountry.name
+    });
+
   }
 
+  extraCountryFields() {
+    this.addNewCountry();
+
+    this.nextAvailableId = this.trip.tripCountries.length;
+
+    // Input fields not copying
+    this.trip.tripCountries[this.nextAvailableId] = {id: 0, countryId: 0, cityName: '', name:''};
+    console.log(this.trip.tripCountries);
+
+    // Id + 1
+    this.nextAvailableId++;
+    
+  }
+
+    // Remove extra fields
+    removeLocationFields() {
+      console.log(this.nextAvailableId)
+      if (this.trip.tripCountries.length > 1) {
+        this.trip.tripCountries.pop();
+        this.nextAvailableId--;
+      }
+      console.log(this.nextAvailableId)
+    }
 }

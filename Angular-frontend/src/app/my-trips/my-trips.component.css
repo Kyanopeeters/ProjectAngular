@@ -62,3 +62,7 @@ h1, h5{
     background-color: #4e7779;
     color: white; 
 }
+.mid{
+    display: flex;
+    justify-content: center;
+}

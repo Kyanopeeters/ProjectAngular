@@ -16,39 +16,66 @@ namespace TripPlannerBackend.API.Controllers
     {
         private readonly TripPlannerDbContext _context;
         private readonly IMapper _mapper;
-       // private readonly ILogger _logger;
+
         public TripController(TripPlannerDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            // _logger = logger;
-        }
+       }
 
 
         //Get trip By ID
         [HttpGet("{id}")]
         [Authorize]
-        //[Authorize(Policy = "TripReadAccess")]
         public async Task<ActionResult<GetTripDto>> GetTrip(int id)
         {
-            //string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var trip = await _context.Trips
-                .Include(t => t.Activities).ThenInclude(t => t.ActivityType)
-                .Include(t => t.TripType)
-                .Include(t => t.TripCountries).ThenInclude(t => t.Country)
-                .SingleAsync(t => t.Id == id);
-
-            if (trip == null)
+            try
             {
-                return NotFound();
-            }
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var trip = await _context.Trips
+                    .Include(t => t.Activities).ThenInclude(t => t.ActivityType)
+                    .Include(t => t.TripType)
+                    .Include(t => t.TripCountries).ThenInclude(t => t.Country)
+                    .Where(t => t.IsPublic || t.UserId == userId)
+                    .SingleAsync(t => t.Id == id);
 
-            return _mapper.Map<GetTripDto>(trip);
+                if (trip == null)
+                {
+                    return NotFound();
+                }
+
+                return _mapper.Map<GetTripDto>(trip);
+            }
+            catch (Exception ex)
+            {
+                return Forbid();
+            }
+        }
+
+
+        // Get the details of a trip with a unique link
+        [HttpGet("byGuid/{guid}")]
+        [Authorize]
+        public async Task<ActionResult<GetTripDto>> GetTripByGuid(Guid guid)
+        {
+            
+                var trip = await _context.Trips
+                    .Include(t => t.Activities).ThenInclude(t => t.ActivityType)
+                    .Include(t => t.TripType)
+                    .Include(t => t.TripCountries).ThenInclude(t => t.Country)
+                    .FirstOrDefaultAsync(t => t.GUIDLink == guid);
+
+                if (trip == null)
+                {
+                    return NotFound();
+                }
+
+                return _mapper.Map<GetTripDto>(trip);
+            
         }
 
         // Get all the public trips
         [HttpGet]
-        //[Authorize(Policy = "TripReadAccess")]
         public async Task<ActionResult<List<GetTripDto>>> GetPublicTrips()
         {
             var trips = await _context.Trips
@@ -69,28 +96,27 @@ namespace TripPlannerBackend.API.Controllers
         // Get specific user trips
         [HttpGet("user")]
         [Authorize]
-        //[Authorize(Policy = "TripReadAccess")]
         public async Task<ActionResult<List<GetTripDto>>> GetMyTrips()
         {
+           
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var trips = await _context.Trips.Where(t => t.UserId == userId)
+                    .Include(t => t.Activities).ThenInclude(t => t.ActivityType)
+                    .Include(t => t.TripType)
+                    .Include(t => t.TripCountries).ThenInclude(t => t.Country)
+                    .ToListAsync();
 
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var trips = await _context.Trips.Where(t => t.UserId == userId)
-                .Include(t => t.Activities).ThenInclude(t => t.ActivityType)
-                .Include(t => t.TripType)
-                .Include(t => t.TripCountries).ThenInclude(t => t.Country)
-                .ToListAsync();
+                if (trips == null)
+                {
+                    return NotFound();
+                }
 
-            if (trips == null)
-            {
-                return NotFound();
-            }
-
-            return _mapper.Map<List<GetTripDto>>(trips);
+                return _mapper.Map<List<GetTripDto>>(trips);
+           
         }
 
         //Get Search
         [HttpGet("search")]
-        //[Authorize(Policy = "TripReadAccess")]
         public ActionResult<List<GetTripDto>> SearchTrips([FromQuery] SearchTripDto searchDto)
         {
             var trips = _context.Trips
@@ -99,7 +125,6 @@ namespace TripPlannerBackend.API.Controllers
                 .Include(t => t.TripType)
                 .Include(t => t.TripCountries).ThenInclude(t => t.Country)
                 .Where(t => t.Name.ToLower().Contains(searchDto.Name.ToLower()) && t.IsPublic);
-            // .Where(t => (t.Name.ToLower().Contains(searchDto.Name.ToLower()) && t.IsPublic || (t.TripCountries.().Contains(searchDto.Name.ToLower())) && t.IsPublic));
 
 
             if (trips == null)
@@ -114,12 +139,12 @@ namespace TripPlannerBackend.API.Controllers
         // Create a trip
         [HttpPost("create")]
         [Authorize]
-        //[Authorize(Policy = "TripWriteAccess")]
         public async Task<ActionResult<GetTripDto>> AddTrip(CreateTripDto trip)
         {
             //We map the CreateTripDto to the Trip entity object
            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Trip tripToAdd = _mapper.Map<Trip>(trip);
+            tripToAdd.GUIDLink = Guid.NewGuid(); 
             _context.Trips.Add(tripToAdd);
             await _context.SaveChangesAsync();
             GetTripDto tripToReturn = _mapper.Map<GetTripDto>(tripToAdd);
@@ -128,35 +153,30 @@ namespace TripPlannerBackend.API.Controllers
         }
 
         [HttpPut("{id}")]
-        // [Authorize]
-        public async Task<ActionResult<GetTripDto>> EditTrip(int id, EditTripDto editTrip)
-        {
+        [Authorize]
+        public async Task<ActionResult<EditTripDto>> EditTrip(int id, EditTripDto editTrip)
 
+        {
             try
             {
                 // Get trip that you want to edit
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 var existingTrip = await _context.Trips.FindAsync(id);
 
-                if (existingTrip == null)
+                if (existingTrip == null || userId != existingTrip.UserId)
                 {
                     return NotFound($"Trip with id {id} not found.");
                 }
 
-                // Update only the fields that can be modified
                 _mapper.Map(editTrip, existingTrip);
-
-                _context.Entry(existingTrip).State = EntityState.Modified;
 
                 await _context.SaveChangesAsync();
 
-                var editedTripDto = _mapper.Map<GetTripDto>(existingTrip);
-
-                return Ok(editedTripDto);
+                return Ok(editTrip);
             }
             catch (Exception ex)
             {
                 // Log the exception for further analysis
-                //_logger.LogError(ex, "An error occurred while editing the trip.");
                 return StatusCode(500, "Internal server error");
             }
         }

@@ -20,4 +20,16 @@ export class HomepageComponent {
     });
   }
 
+  handleSignUp(): void {
+    this.authService.loginWithRedirect({
+      appState: {
+        target: "/myTrips",
+      },
+      authorizationParams: {
+        prompt: "login",
+        screen_hint: "signup",
+      },
+    });
+  }
+
 }

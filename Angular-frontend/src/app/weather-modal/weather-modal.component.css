@@ -1,0 +1,7 @@
+.data {
+    color: #829b8f;
+}
+.imagecont {
+    display: flex;
+    justify-content: center;
+}

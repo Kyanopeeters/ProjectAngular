@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>{{ data.activity.name }}</h1>
+<div mat-dialog-content>
+    <p>{{ data.activity.startTime | date : "HH:mm" }} - {{ data.activity.endTime | date : "HH:mm"}}</p>
+    <p>Type activiteit : {{ data.activity.activityType }}</p>
+    @if(data.activity.streetName != null || data.activity.streetNr != null) {
+        Adres: {{ data.activity.streetName }} {{ data.activity.streetNr }}
+    }
+    @if(data.activity.postalCode != null || data.activity.city != null) {
+        <p>{{ data.activity.postalCode }} {{ data.activity.city }}</p>
+    }
+    @if(data.activity.comment != null) {
+        <p>Commentaar: {{ data.activity.comment }}</p>
+    }
+    @if(data.activity.transportType != null) {
+        <p>Transport: {{ data.activity.transportType }}</p>
+    }
+    @if(data.activity.distance != null) {
+        <p>Afstand: {{ data.activity.distance }} km</p>
+    }
+    @if(data.activity.price != null) {
+        <p>Prijs: € {{ data.activity.price }}</p>
+    }
+
+    @if( data.userId === userId ) {
+    <mat-dialog-actions align="end">
+    <button class="btn gen"><i class="fa-solid fa-pen-to-square"></i> Bewerk</button>
+    <button class="btn trash" mat-dialog-close (click)="openDialog(data.activity)"><i class="fas fa-trash"></i> Verwijder</button>
+    </mat-dialog-actions>
+    }
+
+
+
+</div>

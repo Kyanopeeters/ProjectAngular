@@ -13,6 +13,7 @@ namespace TripPlannerBackend.API.Dto
 
         public DateTime ReturnDate { get; set; }
         public bool IsPublic { get; set; }
+        public Guid GUIDLink { get; set; }
 
         public IEnumerable<GetTripCountryDto> TripCountries { get; set; }
 

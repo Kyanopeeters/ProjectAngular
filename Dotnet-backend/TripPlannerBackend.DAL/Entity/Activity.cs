@@ -13,7 +13,6 @@ namespace TripPlannerBackend.DAL.Entity
         public int TripId { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        //public object? Document { get; set; }
         public double? Price { get; set; }
         public string? StreetName { get; set; }
         public string? StreetNr { get; set; }

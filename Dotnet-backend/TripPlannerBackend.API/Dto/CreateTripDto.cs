@@ -8,6 +8,7 @@
         public DateTime DepartDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public bool IsPublic { get; set; }
+        public Guid GUIDLink { get; set; }
         public IEnumerable<CreateActivityDto>? Activity { get; set; }
         public IEnumerable<CreateTripCountryDto> Country { get; set; }
 

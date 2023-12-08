@@ -10,7 +10,6 @@ import { FooterComponent } from './footer/footer.component';
 import { PublicTripsComponent } from './public-trips/public-trips.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
-//import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { ActivityModalComponent } from './activity-modal/activity-modal.component';
@@ -19,7 +18,11 @@ import { environment } from '../environments/environment'; '@angular/common/http
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { CustomFilterPipe } from './custom-filter-pipe/custom-filter-pipe.pipe';
 import { WeatherModalComponent } from './weather-modal/weather-modal.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DetailsActivityDialogComponent } from './details-activity-dialog/details-activity-dialog.component';
+import { DeleteActivityDialogComponent } from './delete-activity-dialog/delete-activity-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 const domain = environment.AUTH0_DOMAIN;
 const clientId = environment.AUTH0_CLIENT_ID;
@@ -43,7 +46,12 @@ const clientId = environment.AUTH0_CLIENT_ID;
     DetailsTripComponent,
     CreateTripComponent,
     ActivityModalComponent,
+    NgxPaginationModule,
     WeatherModalComponent,
+    DetailsActivityDialogComponent,
+    DeleteActivityDialogComponent,
+    MatDialogModule,
+    MatButtonModule,
     AuthModule.forRoot({
       domain: domain,
       clientId: clientId,
@@ -60,6 +68,7 @@ const clientId = environment.AUTH0_CLIENT_ID;
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

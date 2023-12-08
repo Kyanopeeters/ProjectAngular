@@ -5,7 +5,6 @@ a, button {
 }
 #logo{
     font-size: x-large;
-    font-family: Comic Sans MS, Comic Sans, cursive;
 }
 nav a.active {
     color: white;

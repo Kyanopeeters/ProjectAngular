@@ -5,6 +5,7 @@
         public string? Name { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public int TripId { get; set; }
         public int? Price { get; set; }
         public string? StreetName { get; set; }
         public string? StreetNr { get; set; }

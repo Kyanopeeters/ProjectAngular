@@ -22,9 +22,9 @@ export class PdfService {
         // To format departure and return date
         // formatting the date: it has always 2 numbers -> put zero before the date if necessary, put '-' charachter between values, .slice(-2) gets two characters of the string
         const departureDate = new Date(trip.departDate);
-        const formattedDepartureDate = `${('0' + departureDate.getDate()).slice(-2)}-${('0' + (departureDate.getMonth() + 1)).slice(-2)}-${departureDate.getFullYear()} ${('0' + departureDate.getHours()).slice(-2)}:${('0' + departureDate.getMinutes()).slice(-2)}`;
+        const formattedDepartureDate = `${('0' + departureDate.getDate()).slice(-2)}-${('0' + (departureDate.getMonth() + 1)).slice(-2)}-${departureDate.getFullYear()}`;
         const returnDate = new Date(trip.returnDate);
-        const formattedReturnDate = `${('0' + returnDate.getDate()).slice(-2)}-${('0' + (returnDate.getMonth() + 1)).slice(-2)}-${returnDate.getFullYear()} ${('0' + returnDate.getHours()).slice(-2)}:${('0' + returnDate.getMinutes()).slice(-2)}`;
+        const formattedReturnDate = `${('0' + returnDate.getDate()).slice(-2)}-${('0' + (returnDate.getMonth() + 1)).slice(-2)}-${returnDate.getFullYear()}`;
 
         // Get all tripcountries
         let locationsHtml = '<ul style="padding-left: 7px; margin: 0;">';

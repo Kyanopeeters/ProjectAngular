@@ -1,91 +1,104 @@
 <ng-container *ngIf="trip$ | async as trip">
-<div class="container">
-  <h1 class="mb-4 mt-4">Details {{trip.name}}</h1>
-  <div class="row">
-    <div class="col">
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>Naam</th>
-            <td>{{trip.name}}</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>{{trip.tripType.name}}</td>
-          </tr>
-          <tr >
-            <th>Locaties</th>
-            <td><ul >
-              <li *ngFor="let country of trip.tripCountries">
-                {{country.cityName}} <a class="btn" data-toggle="modal" data-target="#weatherModal">({{country.name}})</a>
-                <app-weather-modal [country]="country.name" [city]="country.cityName"></app-weather-modal>
-              </li>
-            </ul></td>
-          </tr>
-          <tr>
-            <th>Vertrek Datum</th>
-            <td>{{trip.departDate | date}}</td>
-          </tr>
-          <tr>
-            <th>Eind Datum</th>
-            <td>{{trip.returnDate | date}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-around">
-        <a (click)="back()" class="btn btn-outline-secondary mr-3"><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</a>
-        @if( trip.userId === userId ) {
-        <a (click)="updateTripById(trip.id, trip)" class="btn btn-outline-secondary">Bewerk trip</a>
-
-        <a class="btn btn-outline-secondary">
-          Deelnemer uitnodigen
-        </a>
-      }
-      </div>
-    </div>
-<hr class="mr-3 ml-3">
-    <div class="col">
-      <h3>Overzicht activiteiten</h3>
-      <div class="dropdown d-flex justify-content-end">
-        <a
-          class="btn btn-outline-secondary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          ActiviteitenType
-      </a>
-      <!-- TODO momenteel toont hij elke activiteit zen type ipv de types van de activiteiten die anders zijn zodat je erop kan filteren -->
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#" *ngFor="let activity of trip.activities">{{activity.activityType}}</a>
+  <div class="container">
+    <h1 class="mb-4 mt-4">Details {{ trip.name }}</h1>
+    <div class="row">
+      <div class="col-md-5 col-lg-5">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Naam</th>
+              <td>{{ trip.name }}</td>
+            </tr>
+            <tr>
+              <th>Type</th>
+              <td>{{ trip.tripType.name }}</td>
+            </tr>
+            <tr>
+              <th>Locaties</th>
+              <td>
+                <ul>
+                  <li *ngFor="let country of trip.tripCountries; let i = index">
+                    {{ country.cityName }} ({{ country.name }})
+                    <button
+                      data-toggle="modal"
+                      [attr.data-target]="'#weatherModal' + i"
+                      class="btn btn-outline-secondary"
+                    >
+                      <i class="fa-solid fa-cloud-sun-rain"></i>
+                    </button>
+                    <app-weather-modal
+                      [country]="country.name"
+                      [city]="country.cityName"
+                      [modalId]="'weatherModal' + i"
+                    ></app-weather-modal>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>Vertrek Datum</th>
+              <td>{{ trip.departDate | date : 'dd/MM/YYYY' }}</td>
+            </tr>
+            <tr>
+              <th>Eind Datum</th>
+              <td>{{ trip.returnDate | date : 'dd/MM/YYYY' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-around">
+          <button (click)="back()" class="btn butt btn-block mt-2"
+            ><i class="fa-solid fa-rotate-left"></i>&nbsp;Terug</button>
+            <button (click)="generatePDF()" class="btn butt btn-block">
+              + PDF
+            </button>
+            @if( trip.userId === userId ) {
+            <button
+              (click)="updateTripById(trip.id, trip)"
+              class="btn butt btn-block">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            }
         </div>
       </div>
 
-       <div>
-        <ul class="m-4" *ngFor="let rangedate of findRange(trip.departDate, trip.returnDate)">{{ rangedate | date }}
-          <div *ngFor="let activity of trip.activities" >
-            <li *ngIf="(rangedate | date: 'dd/MM/YYYY') == (activity.startTime | date: 'dd/MM/YYYY')">       
-              <a href="#">{{activity.startTime | date:'h:mm'}}  {{activity.name}}</a>
-            </li> 
+        <hr class="mr-3 ml-3" />
+        <div class="col-md-6 col-lg-6 d-flex flex-column justify-content-betwee">
+          <h3>Overzicht activiteiten</h3>
+          <div>
+            <ul
+              class="m-4"
+              *ngFor="
+                let rangedate of findRange(trip.departDate, trip.returnDate)
+              "
+            >
+              {{
+                rangedate | date: 'dd/MM/yyyy'
+              }}
+              <div *ngFor="let activity of trip.activities">
+                <li
+                  *ngIf="
+                    (rangedate | date : 'dd/MM/YYYY') ==
+                    (activity.startTime | date : 'dd/MM/YYYY')
+                  "
+                >
+                  <a class="activityList" (click)="openDialog(activity, trip.userId)">
+                    {{ activity.startTime | date : "HH:mm" }} - {{ activity.name }}</a>
+                </li>
+              </div>
+            </ul>
           </div>
-        </ul>
+
+          @if( trip.userId === userId ) {
+          <div class="mt-auto w-50 text-center">
+            <button
+              (click)="addActivity(trip.id)"
+              id="buttonActiviteitenToevoegen"
+              class="btn butt btn-block"
+              >Activiteit toevoegen</button
+            >
+          </div>
+          }
       </div>
-
-
-      
-
-    
-      @if( trip.userId === userId ) {
-      <div>
-        <!-- <button class="btn btn-outline-secondary mt-3 ml-4 mb-2" data-toggle="modal" data-target="#activityModal"><i class="fa-solid fa-plus"></i> Toevoegen</button> -->
-        <a (click)="addActivity(trip.id)" class="btn btn-outline-secondary">Activiteit toevoegen</a>
-      </div>
-      <!-- <app-activity-modal [tripID]="trip.id"></app-activity-modal> -->
-    }
     </div>
   </div>
-  <input type="submit" (click)="generatePDF()" class="btn btn-outline-info btn-md m-2 mt-4 mt-3 float-right " value="Genereer PDF" />
-</div>
 </ng-container>

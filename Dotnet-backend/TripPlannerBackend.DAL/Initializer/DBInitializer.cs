@@ -50,6 +50,8 @@ namespace TripPlannerBackend.DAL.Initializer
                 context.SaveChanges();
             }
 
+           // var guidValue = new Guid();
+
             // Seed the Trips table with some dummy data
             if (!context.Trips.Any())
             {
@@ -62,7 +64,8 @@ namespace TripPlannerBackend.DAL.Initializer
                     new Activity(){ Name = "Heenvlucht", ActivityTypeId = 1, TransportType = "Vliegtuig", StartTime = DateTime.Parse("2023-01-21 13:00:00"), EndTime = DateTime.Parse("2023-01-21 15:00:00") },
                     new Activity(){ Name = "Overnachting in een iglo", ActivityTypeId = 5, Price = 200, StartTime = DateTime.Parse("2023-01-21 20:00:00"), EndTime = DateTime.Parse("2023-01-22 08:00:00"), City = "Winterberg" },
         
-                }
+                },
+                    GUIDLink = Guid.NewGuid()
                 },
                 new Trip {
                     Name = "Trip België",UserId = "auth0|655f9d5c022a9fc3be9f4315", TripTypeId= 2,DepartDate = DateTime.Parse("2023-03-20"), ReturnDate = DateTime.Parse("2023-03-24"), IsPublic = true, Activities = new List<Activity>()
@@ -80,7 +83,9 @@ namespace TripPlannerBackend.DAL.Initializer
                     new Activity(){Name ="Wandeling in Park Spoor Noord", ActivityTypeId = 5, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-23 14:00:00"), EndTime = DateTime.Parse("2023-03-23 16:00:00")},
                     new Activity(){Name ="Uitchecken + vertrek", ActivityTypeId = 6, City = "Antwerpen", StartTime = DateTime.Parse("2023-03-24 08:00:00"), EndTime = DateTime.Parse("2023-03-24 10:00:00")},
 
-                }
+                },
+                   GUIDLink = Guid.NewGuid()
+
                 },
                 new Trip {
                     Name = "Trip Frankrijk", UserId = "auth0|655b48b2c90bf30f6a12291a", TripTypeId= 3,DepartDate = DateTime.Parse("2024-02-01"), ReturnDate = DateTime.Parse("2024-02-10"), IsPublic = true, Activities = new List<Activity>()
@@ -88,7 +93,9 @@ namespace TripPlannerBackend.DAL.Initializer
                     new Activity(){Name="Boswandeling", ActivityTypeId = 5, StartTime = DateTime.Parse("2024-02-02 10:30:00"), EndTime = DateTime.Parse("2024-02-02 12:00:00")},
                     new Activity(){ Name = "Kajakken op de rivier", ActivityTypeId = 4, TransportType = "Kajak", Price = 25, Distance = 30, StartTime = DateTime.Parse("2024-02-09 12:30:00"), EndTime = DateTime.Parse("2024-02-09 18:00:00")},
         
-                }
+                },
+                  GUIDLink = Guid.NewGuid()
+
                 },
                };
 

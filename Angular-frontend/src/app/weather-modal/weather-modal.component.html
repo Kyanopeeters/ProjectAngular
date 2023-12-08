@@ -2,6 +2,7 @@
 <div
   class="modal fade"
   id="weatherModal"
+  [id]="modalId"
   tabindex="-1"
   role="dialog"
   aria-labelledby="ModalLabel"
@@ -11,7 +12,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="weatherModalLabel">Huidig weer in {{country}}</h5>
+        <h5 class="modal-title" id="weatherModalLabel">Huidig weer in {{city}} - {{country}} </h5>
         <button
           type="button"
           class="close"
@@ -23,15 +24,16 @@
       </div>
       <div class="modal-body">
         <!-- content -->
-        <div *ngIf="weatherinfo$ | async as weather">
-          <!-- ! divke is meer om te loggen wat de lat lng en code zijn, moet nog weggedaan worden -->
-            <!-- <div>
-                {{lat}} {{lng}} {{code}}
-            </div> -->
-            <div>
-              <p>Gevoelstemperatuur: {{weather.main.feels_like}} °C</p>
-              <p>Weer: {{weather.weather[0].description}}</p>
-            </div>
+        <div *ngIf="weatherinfo$ | async as weather" class="row cont">
+          <div class="col mt-4">
+            <p>Gevoelstemperatuur: <span class="data">{{weather.main.feels_like}} °C</span></p>
+            <p>Luchtvochtigheid: <span class="data">{{weather.main.humidity}} %</span></p>
+            <p>Windsnelheid: <span class="data">{{weather.wind.speed}} km/h</span></p>
+            <p>Weer: <span class="data">{{weather.weather[0].description}}</span></p>
+          </div>
+          <div class="col imagecont"> 
+            <img src="https://openweathermap.org/img/wn/{{weather.weather[0].icon}}@4x.png" class="iconweather"/>
+          </div>
         </div>
     </div>
   </div>

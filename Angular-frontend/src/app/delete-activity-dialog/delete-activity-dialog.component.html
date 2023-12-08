@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Verwijder {{ data.activity.name }}</h2>
+<div mat-dialog-content>
+    <p>Weet je zeker dat je deze activiteit wil verwijderen?</p>
+
+
+</div>
+<mat-dialog-actions align="end">
+    <button class="btn gen" mat-dialog-close>Annuleer</button>
+    <button class="btn trash" mat-dialog-close (click)="deleteActivity(data.activity.id)"><i class="fas fa-trash"></i> Verwijder</button>
+</mat-dialog-actions>

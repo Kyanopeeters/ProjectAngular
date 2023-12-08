@@ -4,20 +4,38 @@
   <a routerLink="/tripaanmaken" class="btn add ml-4 btn-lg"><i class="fa-solid fa-plus"></i> Toevoegen</a>
 </div>
 <div class="con" *ngIf="trips$ | async as trips">
-  <div class="card mt-4 ml-4" style="width: 23rem;" *ngFor="let t of trips">
+  <div class="card mt-4 ml-4" style="width: 23rem;" *ngFor="let t of trips | paginate: { itemsPerPage: 9, currentPage: p }">
     <img class="card-img-top" src="../../assets/{{t.tripType.id}}.jpg" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ t.name }}</h5>
       <p class="card-text description">{{ t.tripType.name}} met {{t.activities.length}} activiteiten.</p>
       <div>
         <button class="btn mr-3 watch" (click)="detail(t.id)"><i class="fa-solid fa-eye"></i>&nbsp;Bekijk</button>
-        <button href="#" class="btn watch mr-3"><i class="fas fa-globe"></i>&nbsp;Share</button>
+        <button href="#" (click)="share(t.id)" class="btn watch mr-3" data-toggle="modal" data-target="#shareModal"><i class="fas fa-globe"></i>&nbsp;Delen</button>
             <button href="#" (click)="setDelete(t.id)" class="btn trash" type="button" data-toggle="modal" data-target="#deleteTripModal"><i
               class="fas fa-trash"></i>&nbsp;Verwijder</button>
       </div>
     </div>
-    
-    <!-- Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Trip delen</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Deel deze link:</p>
+              <input type="text" [value]="url" readonly class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Modal for deletion a trip -->
     <div class="modal fade" id="deleteTripModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -54,4 +72,7 @@
       <p>Je hebt nog geen trips. Maak er snel een aan!</p>
     </div>
   </div>
+</div>
+<div class="mid mt-5">
+  <pagination-controls (pageChange)="p = $event" previousLabel="Vorige" nextLabel="Volgende" [autoHide]=true></pagination-controls>
 </div>

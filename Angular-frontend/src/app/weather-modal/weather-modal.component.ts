@@ -15,6 +15,7 @@ import { Weather } from '../models/api/weather';
 export class WeatherModalComponent implements OnInit {
   @Input() country: string = "";
   @Input() city: string = "";
+  @Input() modalId: string = '';
   lat: number = 0;
   lng: number =0;
   code: string = "";
@@ -28,8 +29,6 @@ export class WeatherModalComponent implements OnInit {
         this.code = countryInfo.code;
         this.lat = countryInfo.latlng[0];
         this.lng = countryInfo.latlng[1];
-        // get weather for a country
-        //this.weatherinfo$ = this.weather.getWeather(this.lat, this.lng);
         //get weather for a city
         this.weatherinfo$ = this.weather.getWeather(this.city, this.code);
       }

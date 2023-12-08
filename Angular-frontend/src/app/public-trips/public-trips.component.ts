@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./public-trips.component.css']
 })
 export class PublicTripsComponent {
+  p: number = 1;
   trips$ : Observable<Trip[]> = new Observable<Trip[]>();
 
   searchString: string = "";

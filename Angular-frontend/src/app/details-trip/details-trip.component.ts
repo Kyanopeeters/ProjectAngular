@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Trip } from '../models/api/trip';
 import { TripService } from '../services/trip.service';
 import { ActivityService } from '../services/activity.service';
@@ -13,12 +13,15 @@ import { ActivityModalComponent } from '../activity-modal/activity-modal.compone
 import { Router } from '@angular/router';
 import { PdfService } from '../services/pdf.service';
 import { WeatherModalComponent } from '../weather-modal/weather-modal.component';
+import { MatDialog} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import { DetailsActivityDialogComponent } from '../details-activity-dialog/details-activity-dialog.component';
 import { Activity } from '../models/api/activity';
 
 @Component({
   selector: 'app-details-trip',
   standalone: true,
-  imports: [ CommonModule, ActivityModalComponent, WeatherModalComponent ],
+  imports: [ CommonModule, ActivityModalComponent, WeatherModalComponent, MatButtonModule ],
   templateUrl: './details-trip.component.html',
   styleUrls: ['./details-trip.component.css']
 })
@@ -29,21 +32,22 @@ export class DetailsTripComponent implements OnInit{
   trip : Trip[] = []
   userId : string = "";
   
-  constructor(private userService: UserService, private location: Location, private tripService : TripService, private activityService : ActivityService, private route : ActivatedRoute, private router : Router, private pdfService: PdfService) {}
-
- 
+  constructor(private userService: UserService, private location: Location, private tripService : TripService, private route : ActivatedRoute, private router : Router, private pdfService: PdfService, private dialog: MatDialog) {}
 
   ngOnInit() : void {
     const tripId = this.route.snapshot.paramMap.get('id');
     if (tripId != null) {
-      this.trip$ = this.tripService.getTripById(+tripId); 
+      this.trip$ = this.tripService.getTripById(+tripId).pipe(
+        catchError((error) => {
+          if (error.status === 403) {
+            this.router.navigate(['/unauthorized']);
+          }
+          throw error;
+        })
+      ); 
 
     }
 
-    
-
-
-    
     this.userService.whoIsLoggedIn().subscribe(
       (sub) => {
         this.userId = sub;
@@ -56,9 +60,14 @@ export class DetailsTripComponent implements OnInit{
     
   }
   
-
   back(): void {
-    this.location.back()
+    this.location.back();
+  }
+
+  openDialog(activity: Activity, userId: string) {
+    this.dialog.open(DetailsActivityDialogComponent, {
+      data: {activity, userId}
+    });
   }
 
   
@@ -79,11 +88,6 @@ export class DetailsTripComponent implements OnInit{
     if (tripId != null) {
       this.pdfService.generatePDF(+tripId);
     }
-  }
-  
-  
-  showWeather(country: string) {
-    
   }
 
   findRange(startDate: Date, stopDate: Date) {

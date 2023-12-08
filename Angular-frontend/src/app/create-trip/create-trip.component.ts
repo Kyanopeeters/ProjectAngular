@@ -85,7 +85,6 @@ export class CreateTripComponent implements OnInit {
   // function addCountry
   addCountry() {
     this.trip.country.push({
-      // id: 0,
       id: this.nextAvailableId,
       cityName : this.selectedCountry.cityName,
       countryId: +this.selectedCountryId!
@@ -103,6 +102,7 @@ export class CreateTripComponent implements OnInit {
     isPublic: false,
   }
   
+  // Add extra fields
   addNewLocationFields() {
     // Function addcountry()
     this.addCountry();
@@ -112,8 +112,15 @@ export class CreateTripComponent implements OnInit {
 
     // Id + 1
     this.nextAvailableId++;
+    
+  }
 
+  // Remove extra fields
+  removeLocationFields() {
+    if (this.trip.country.length > 0) {
+      this.trip.country.pop();
+      this.nextAvailableId--;
+    }
   }
   
-
 };

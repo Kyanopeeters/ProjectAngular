@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TripPlannerBackend.DAL;
@@ -46,11 +46,12 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+
 /*using (var scope = app.Services.CreateScope())
 {
     var tripContext = scope.ServiceProvider.GetRequiredService<TripPlannerDbContext>();
     DBInitializer.Initialize(tripContext);
-}
-*/
+}  */
+
 
 app.Run();

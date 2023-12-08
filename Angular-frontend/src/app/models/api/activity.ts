@@ -9,6 +9,7 @@ export interface Activity {
     endTime: Date,
     transportType: string,
     city: string,
+    country: string,
     postalCode: string,
     streetName: string,
     streetNr: string,

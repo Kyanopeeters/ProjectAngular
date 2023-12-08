@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivityType } from '../models/api/activity-type';
 import { ActivityForm } from '../models/api/create-activity';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { Activity } from '../models/api/activity';
 
 @Injectable({

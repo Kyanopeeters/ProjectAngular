@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Trip } from '../models/api/trip';
 import { TripForm } from '../models/api/create-trip'
 import { TripType } from '../models/api/trip-type';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -26,7 +26,6 @@ import { Activity } from '../models/api/activity';
   styleUrls: ['./details-trip.component.css']
 })
 export class DetailsTripComponent implements OnInit{
-  // @ViewChild('activityModal') activityModal: ElementRef | undefined;
 
   trip$ : Observable<Trip> = new Observable<Trip>()
   trip : Trip[] = []
@@ -36,7 +35,7 @@ export class DetailsTripComponent implements OnInit{
 
   ngOnInit() : void {
     const tripId = this.route.snapshot.paramMap.get('id');
-    if (tripId != null) {
+    if (tripId != null && !isNaN(+tripId)) {
       this.trip$ = this.tripService.getTripById(+tripId).pipe(
         catchError((error) => {
           if (error.status === 403) {
@@ -46,6 +45,17 @@ export class DetailsTripComponent implements OnInit{
         })
       ); 
 
+    }
+    else
+    {
+      this.trip$ = this.tripService.getTripByGuid(tripId!).pipe(
+        catchError((error) => {
+          if (error.status === 403) {
+            this.router.navigate(['/unauthorized']);
+          }
+          throw error;
+        })
+      );
     }
 
     this.userService.whoIsLoggedIn().subscribe(

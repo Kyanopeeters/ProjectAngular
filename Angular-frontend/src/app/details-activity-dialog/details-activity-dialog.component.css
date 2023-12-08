@@ -1,0 +1,30 @@
+.gen{
+    border: 1.5px solid #4e7779;
+    color: #4e7779; 
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: white;
+}
+.gen:hover{
+    background-color: #4e7779;
+    color: white; 
+}
+
+.trash{
+    border: 1.5px solid #ff6961;
+    color: #ff6961; 
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: white;
+}
+.trash:hover{
+    background-color: #ff6961;
+    color: white; 
+}
+
+button {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+

@@ -1,18 +1,16 @@
-@media (min-width: 450px) { 
-    img {
-        display: none;
-    }
+@media (max-width: 768px) { 
+#foto{
+    display: none;
 }
-
-@media (min-width: 768px) { 
-    img {
-        display: inline; 
-    }
+h2{
+    margin-top: 25px;
+}
 }
 
 .jumbotron {
     background-color: #829b8f;
     color: white;
+    border-radius: 0%;
 }
 
 .btn-primary {
@@ -20,12 +18,11 @@
     border: none;
 }
 
-
-
 .row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 100px;
+
 }
 
 .float-right {

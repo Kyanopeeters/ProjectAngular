@@ -63,13 +63,6 @@ namespace TripPlannerBackend.DAL
                 .HasForeignKey(tl => tl.CountryId)
                 .IsRequired();
 
-            //Other side
-            //modelBuilder.Entity<Activity>()
-            //    .HasOne(e => e.Trip)
-            //    .WithMany(e => e.Activities)
-            //    .HasForeignKey(e => e.TripId)
-            //    .IsRequired();
-
             modelBuilder.Entity<Trip>().ToTable("Trip");
             modelBuilder.Entity<Activity>().ToTable("Activity");
             modelBuilder.Entity<ActivityType>().ToTable("ActivityType");

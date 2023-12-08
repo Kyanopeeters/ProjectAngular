@@ -4,12 +4,11 @@
       <p>Blijf niet dromen, plan gewoon.</p>
       @if(!isAuthenticated()) {
       <!-- Redirect to register -->
-      <p><a class="btn btn-primary btn-lg"  href="#" role="button">Starten &raquo;</a></p>
+      <p><a class="btn btn-primary btn-lg" (click)="handleSignUp()" role="button">Starten &raquo;</a></p>
       }
     </div>
   </div>
 <div class="container">
-    <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-4">
         <img src="../../assets/homepage-icon-3.svg" width="300" alt="Card image cap">
@@ -17,7 +16,6 @@
       <div class="col-md-6 float-right">
         <h2>Plan je eigen trips</h2>
         <p>Ontdek je ideale bestemming, voeg persoonlijke activiteiten toe en behoud flexibiliteit met onze tripplanner. Creëer moeiteloos jouw perfecte trip en pas deze eenvoudig aan, voor een onvergetelijke en op maat gemaakte ervaring. Plan vandaag nog je eigen avontuur!</p>
-        <!-- <p><a class="btn-link btn btn-secondary" routerLink="/tripaanmaken" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" role="button">Maak een trip &raquo;</a></p> -->
       </div>
     </div>
     <div class="row">
@@ -25,23 +23,21 @@
         <h2>Deel met je vrienden en familie</h2>
         <p>Op vakantie gaan doe je meestal niet alleen. Nodig uit wie je graag mee wilt meenemen, zodat ook zij de volledige planning en informatie kunnen zien. Niets is makkelijker om te zorgen dat iedereen op het juiste moment op de vertrekplaats is en je niemand vergeet.</p>
         <p>Natuurlijk kan je de trip ook gewoon delen met je vrienden om hen jaloers te maken.</p>
-        <!-- <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> -->
       </div>
-      <div class="col-md-4">
+      <div id="foto" class="col-md-4">
         <img src="../../assets/homepage-icon-4.svg" width="225" alt="Card image cap">
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 float-left">
         <img src="../../assets/homepage-icon-5.svg" width="300" alt="Card image cap">
       </div>
       <div class="col-md-6 float-right">
         <h2>Doe inspiratie op</h2>
         <p>Maak niet alleen je eigen trips, maar kijk gerust ook eens door de publieke trips. Wie weet wat valt er nog te ontdekken. Laat je leiden door de ervaringen en planning van anderen.</p>
-        <!-- <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> -->
       </div>
     </div>
 
-  </div> <!-- /container -->
+  </div> 
 
   

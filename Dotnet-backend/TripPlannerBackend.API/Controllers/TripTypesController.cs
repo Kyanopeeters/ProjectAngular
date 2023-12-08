@@ -20,8 +20,6 @@ namespace TripPlannerBackend.API.Controllers
 
         // Get all trip types
         [HttpGet]
-        //[Authorize]
-        //[Authorize(Policy = "TripReadAccess")]
         public async Task<ActionResult<List<GetTripTypesDto>>> GetTripsTypes()
         {
             var tripTypes = await _context.TripTypes.ToListAsync();

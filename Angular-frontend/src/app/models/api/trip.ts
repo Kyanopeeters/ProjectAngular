@@ -13,5 +13,7 @@ export interface Trip {
     departDate: Date,
     returnDate: Date,
     tripCountries: Country[],
+    tripTypeId: number,
+    guidLink: string,
     isPublic: boolean
 }

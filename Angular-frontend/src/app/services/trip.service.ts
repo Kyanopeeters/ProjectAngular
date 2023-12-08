@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Trip } from '../models/api/trip';
 import { TripForm } from '../models/api/create-trip'
 import { TripType } from '../models/api/trip-type';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +27,21 @@ export class TripService {
     return this.http.get<Trip>(this.api_url + "/Trip/" + id);
   }
 
+  getTripByGuid(guid : string) : Observable<Trip> {
+    return this.http.get<Trip>(this.api_url + "/Trip/byGuid/" + guid);
+  }
+
   createTrip(newTrip: TripForm): Observable<TripForm>{
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+
 
     return this.http.post<TripForm>( this.api_url + "/Trip/create" , newTrip , {headers: headers})
   }
 
   getTripTypes(): Observable<TripType[]>
   {
+
     return this.http.get<TripType[]>(this.api_url + "/TripTypes/")
   }
 

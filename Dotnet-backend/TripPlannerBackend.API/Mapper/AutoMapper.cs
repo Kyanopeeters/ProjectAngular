@@ -49,7 +49,19 @@ namespace TripPlannerBackend.API.Mapper
             CreateMap<GetTripCountryDto, TripCountry>();
             CreateMap<TripCountry, GetTripCountryDto>()
                 .ForMember(dest => dest.Name, act => act.MapFrom(src => src.Country.Name));
+
+
+            // Edit Trip
+            CreateMap<EditTripCountryDto, TripCountry>();
             CreateMap<EditTripDto, Trip>();
+            CreateMap<Trip, EditTripDto>();
+
+
+            // Edit Activity
+            CreateMap<EditActivityDto, Activity>();
+            CreateMap<Activity, EditActivityDto>();
+
+
 
         }
     }

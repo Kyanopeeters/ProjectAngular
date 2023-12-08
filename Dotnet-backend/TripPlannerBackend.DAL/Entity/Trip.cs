@@ -17,6 +17,7 @@ namespace TripPlannerBackend.DAL.Entity
         public DateTime ReturnDate { get; set; }
         public bool IsPublic { get; set; }
         public int TripTypeId { get; set; }
+        public Guid? GUIDLink { get; set; }
         public ICollection<Activity>? Activities { get; set; } = new List<Activity>();
 
         public ICollection<TripCountry> TripCountries { get; set; } = new List<TripCountry>();

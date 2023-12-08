@@ -19,7 +19,7 @@ export class MenuComponent {
   handleLogin(): void {
     this.authService.loginWithRedirect({
       appState: {
-        target: '/',
+        target: '/myTrips',
       },
       authorizationParams: {
         prompt: 'login', //other possibilities: https://auth0.github.io/auth0-spa-js/interfaces/AuthorizationParams.html#prompt,
@@ -38,7 +38,7 @@ export class MenuComponent {
   handleSignUp(): void {
     this.authService.loginWithRedirect({
       appState: {
-        target: "/",
+        target: "/myTrips",
       },
       authorizationParams: {
         prompt: "login",

@@ -1,211 +1,103 @@
-<!--Hier komt de nav bar -->
-<head>
-
-    <!--TODO: bootstrap link moet later verwijderd worden-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  </head>
-  <div class="container">
-    <h1 class="text-center">Maak een trip aan</h1>
-  <form #tripForm="ngForm" >
+<div class="container">
+  <h1 class="text-center m-4 mb-2">Bewerk je trip</h1>
+  <form #EditTripForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-row">
+
+      <!-- name fields -->
       <div class="form-group m-2 col-5">
         <label for="naamTrip">Naam</label>
-        <input type="text" class="form-control" id="naamTrip"  placeholder="Geef je trip een naam" value="{{trip?.name}}"
-        placeholder="Geef je trip een naam" required>
+        <input type="text" class="form-control" id="naamTrip" placeholder="Geef je trip een nieuwe naam" required
+          [(ngModel)]="trip.name" name="naamTrip" #name="ngModel">
+          <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Naam is verplicht</div>
       </div>
-  
-      <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType">
-        <label for="typeTrip">Soort trip</label>
-        <select id="typeTrip" class="form-control" value="{{trip?.tripType?.name}}" required>
-          <option selected>Welke soort trip ga je maken?</option>
-          <option *ngFor="let type of tripType"  >{{type.name}} </option>        
-        </select>
-      </div>
-  
-  </div>
-      <div class="w-100"></div>
-      <div class="form-row">
-        <div class="form-group m-2 col-5">
-          <label for="vertrekDatumTrip">Vertrek datum</label>
-          <input type="datetime-local" value="{{trip?.departDate}}" class="form-control" id="vertrekDatumTrip" required>
-        </div>
-        <div class="form-group m-2 col-5">
-          <label for="terugkomstDatumTrip">Terugkomst datum</label>
-          <input type="datetime-local"  value="{{trip?.returnDate}}" class="form-control" id="terugkomstDatumTrip">
-        </div>
-      </div>
-      <div class="w-100"></div> 
-  
-  
-  <div class="form-row" *ngFor="let countriesInTrip of trip?.tripCountries" >
-    <div class="form-group m-2 col-5">
-      <label for="stadTrip">Stad</label>
-      <input type="text"  class="form-control" id="stadTrip" [value]="countriesInTrip.cityName" placeholder="Naar welke stad ga je op je trip?">
-    </div> 
-  
-    <div class="form-group m-2 col-5" *ngIf="tripCountry$ | async as tripCountry">
-      <label for="landTrip">Land</label>
-      <select id="landTrip" class="form-control" [value]="countriesInTrip.name">
-        <option selected>Naar welk land ga je?</option>
-        <option *ngFor="let country of tripCountry" > {{ country.name }} </option>
-      </select>
-    </div>  
-  </div>
 
-    <div class="align-self-end m-2 ">
-      <button (click)="addNewCountry()" type="button" class="btn btn-info"><i class="fa-solid fa-plus"></i> Locatie</button>
-    </div>
-  
-  
-    <div class="form-row" *ngFor="let newCountry of newCountries">
-  
-      <div class=" pl-2 m-2 col-5 form-group" >
-        <label for="stadTrip">Stad</label>
-        <input type="text" class="form-control" id="stadTrip" placeholder="Naar welke stad ga je op je trip?">
-      </div>
-  
-      <div class="form-group m-2 col-5 pl-2">
-        <label for="landTrip">Land</label>
-        <select id="landTrip" class="form-control">
-          <option selected>Naar welk land ga je?</option>
-          <option>...</option>
+
+      <div class="form-group m-2 col-5" *ngIf="tripType$ | async as tripType">
+        <label for="typeTrip">Soort trip *</label>
+        <select id="typeTrip" name="typeTrip" class="form-control" [(ngModel)]="trip.tripType.id" #tripTypeId="ngModel"
+          required>
+          <option disabled selected>Welke soort trip ga je maken?</option>
+          <option *ngFor="let type of tripType" [value]="type.id">{{ type.name }}</option>
         </select>
+        <div [hidden]="tripTypeId.value || tripTypeId.pristine" class="alert alert-danger" role="alert">
+          Selecteer een soort trip.
+        </div>
       </div>
-  
     </div>
-        
-    <div class="w-100"></div>
-  
-  
-  
-    <div class="pt-4 form-row" >
-  
-      <button (click)="addNewActivity()" type="button" id="activiteitToevoegen" class="btn btn-info m-2 col-4"><i class="fa-solid fa-table-tennis-paddle-ball" ></i> Voeg activiteit toe <i class="fa-solid fa-table-tennis-paddle-ball" ></i></button>
-    </div>
-  
-    <div class=" mt-4" *ngFor="let newActivity of newActivities; index as i">
-      <h2 class="col-12">Activiteit {{i+1}}</h2>
-      <form>
+
+
     <div class="form-row">
-      <div class="form-group m-2 pl-2 col-5">
-        <label for="activiteitNaam">Naam</label>
-        <input type="text" id="activiteitNaam" name="activiteitNaam" class="form-control" required>
-      </div>
-      <div class="form-group m-2 pl-2 col-5">
-          <label for="naam">Activiteit type</label>
-          <select id="activiteitType" name="activiteitType" class="form-control" required>
-              <option value="" disabled selected>Selecteer een activiteitstype</option>
-              <option value="optie1">Type 1</option>
-          </select>
-      </div>
-    </div>
-  
-  <div class="form-row">
-    <div class="form-group m-2 pl-2 col-5">
-      <label for="activiteitBegintijd">Begintijd</label>
-      <input type="datetime-local" id="activiteitBegintijd" name="activiteitBegintijd" class="form-control">
-  </div>
-  <div class="form-group m-2  pl-2 col-5">
-      <label for="activiteitEindtijd">Eindtijd</label>
-      <input type="datetime-local" id="activiteitEindtijd" name="activiteitEindtijd" class="form-control">
-  </div>
-  </div>
-      <div class="form-row">
-  
-      <div class="form-group m-2 col-5 pl-2">
-        <label for="activiteitBestanden">Uploaden bestanden</label>
-        <input type="file" class="form-control-file" id="activiteitBestanden" multiple>
-    </div>
-  
-  
-      <div class="form-group m-2 col-5 pl-2">
-          <label for="activiteitVervoersmiddel">Vervoersmiddel</label>
-          <input type="text" id="activiteitVervoersmiddel" name="activiteitVervoersmiddel" class="form-control">
-      </div>
-      </div>
-     <div class="form-row">
-      <div class="form-group m-2 pl-2 col-5">
-        <label for="activiteitGemeente">Gemeente</label>
-        <input type="text" id="activiteitGemeente" name="activiteitGemeente" class="form-control">
-    </div>
-    <div class="form-group m-2 pl-2 col-5">
-        <label for="activiteitPostcode">Postcode</label>
-        <input type="text" id="activiteitPostcode" name="activiteitPostcode" class="form-control">
-      </div>
-     </div>
-      <div class="form-row">
-        <div class="form-group col-5 m-2 pl-2">
-          <label for="activiteitStraat">Straat naam en straat nummer</label>
-          <input type="text" id="activiteitStraat" name="activiteitStraat" class="form-control">
-      </div>
-      <div class="form-group m-2 col-5 pl-2">
-          <label for="activiteitLanden">Land</label>
-          <select id="landen" name="activiteitLanden" class="form-control" required>
-              <option value="" disabled selected>Selecteer een land</option>
-              <option value="optie1">Type 1</option>
-          </select>
-      </div>
-      </div>
-      
-      <!-- Land dropdown menu , meerdere landen kunnen selecteren -->
-      <div class="form-row">
-      <div  class="form-group col-5 m-2 pl-2">
-        <label for="activiteitAfstand" class="form-label">Afstand</label>
-      
-        <div class="input-group mb-3">
-          <input id="activiteitAfstand" name="activiteitAfstand" type="text" class="form-control" aria-label="Prijs activiteit">
-  
-          <div class="input-group-prepend">
-            <span class="input-group-text">km</span>
+      <!-- depart date fields-->
+      <div class="form-group m-2 col-5">
+        <label for="vertrekDatumTrip">Vertrek datum</label>
+        <input type="datetime-local" class="form-control" id="vertrekDatumTrip" name="vertrekDatumTrip" required
+          [(ngModel)]="trip.departDate" #vertrekDatumTrip="ngModel">
+          <div [hidden]="vertrekDatumTrip.valid || vertrekDatumTrip.pristine" class="alert alert-danger">
+            Vertrek datum is verplicht.
           </div>
+          <div *ngIf="trip.departDate > trip.returnDate" class="alert alert-danger">
+            Vertrekdatum moet eerder zijn dan de terugkomstdatum.
+          </div>
+      </div>
+
+      <!-- return date fields-->
+      <div class="form-group m-2 col-5">
+        <label for="terugkomstDatumTrip">Terugkomst datum</label>
+        <input type="datetime-local" class="form-control" id="terugkomstDatumTrip" [(ngModel)]="trip.returnDate"
+          name="terugkomstDatumTrip" #terugkomstDatumTrip="ngModel">
+          <div [hidden]="terugkomstDatumTrip.valid || terugkomstDatumTrip.pristine" class="alert alert-danger">
+            Terugkomst datum is verplicht.
+          </div>
+      </div>
+    </div>
+
+    <div class="form-row" *ngFor="let location of trip.tripCountries; let i = index">
+      <!-- city field -->
+      <div class="form-group m-2 col-5">
+        <label for="cityTrip{{i}}">Stad *</label>
+        <input type="text" class="form-control" id="cityTrip{{i}}" name="cityTrip{{i}}"
+          [(ngModel)]="location.cityName" #cityName="ngModel" required>
+        <div [hidden]="cityName.valid || cityName.pristine" class="alert alert-danger">
+          Stad is verplicht.
         </div>
       </div>
-  
-      <div  class="form-group col-5 m-2 pl-2">
-          <label for="activiteitPrijs" class="form-label">Prijs</label>
-        
-          <div class="input-group mb-3">
-        
-            <div class="input-group-prepend">
-              <span class="input-group-text">€</span>
-            </div>
-            <input id="activiteitPrijs" name="activiteitPrijs" type="text" class="form-control" aria-label="Prijs activiteit">
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-  
-      <div class="form-group m-2 col-5 pl-2">
-        <label for="activiteitPersonen">Welke personen doen de activiteit mee</label>
-        <select multiple class="form-control" id="activiteitPersonen">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+    
+      <!-- country field -->
+      <div class="form-group m-2 col-5">
+        <label for="country{{i}}">Land *</label>
+        <select class="form-control" [id]="'country' + i" name="country{{i}}" [(ngModel)]="location.countryId" required>
+          <option *ngFor="let country of tripCountry$ | async" [value]="country.id" >
+            {{ country.name }}
+          </option>
         </select>
+        <div [hidden]="location.countryId !== null" class="alert alert-danger">
+          Land is verplicht.
+        </div>
       </div>
+    </div>
+    
   
-      <div class="form-group m-2 col-5 pl-2">
-          <label for="activiteitOpmerkingen">Opmerkingen</label>
-          <textarea class="form-control" id="activiteitOpmerkingen" rows="4"></textarea>
+    <!-- ispublic field-->
+    <div class="form-row">
+      <div class="form-group m-2 col-5">
+        <label for="isPublicCheckbox" class="mr-2 ">Is Publiek?</label>
+        <input type="checkbox" id="isPublicCheckbox" [(ngModel)]="trip.isPublic" name="isPublic" #isPublic="ngModel">
       </div>
+      <!-- Button for adding extra fields or deleting fields for location -->
+      <div class="align-self-end m-2 col-5 justify-content-between" style="display: flex;">
+        <button type="button" class="btn btn-outline-info" (click)="extraCountryFields()">Extra locaties
+          toevoegen</button>
+        <button type="button" class="btn btn-outline-danger" (click)="removeLocationFields()"
+          *ngIf="trip.tripCountries.length > 0">Verwijder locatie</button>
       </div>
-      
+    </div>
+
+    <!-- submit form -->
+    <div class="pt-5">
+      <input type="submit" class="btn btn-outline-info btn-lg" value="Trip bewerken" />
+    </div>
+
   </form>
-  <hr class="dashed">
-  
-  </div>
-    <div class="w-100"></div>
-  
-      <div class="pt-5">
-        <button type="submit" class="btn btn-outline-info btn-lg">Trip opslaan</button>
-  
-      </div>
-    </form>
-  </div>
-  
-  <script src="../create-trip/create-trip.component.ts"></script>
-  
+</div>
+
+<script src="../create-trip/create-trip.component.ts"></script>

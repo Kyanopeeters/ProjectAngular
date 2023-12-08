@@ -4,3 +4,37 @@ hr{
     height:         auto;
     width:          1px;      
 }
+@media (max-width: 768px) { 
+    hr{
+        display: none;
+    }
+    h3{
+        margin-top: 50px;
+    }
+    #buttonActiviteitenToevoegen{
+        margin-bottom: 25px;
+        margin-left: 5px;
+    }
+}
+
+.butt{
+    border: 1.5px solid #4e7779;
+    color: #4e7779; 
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: white;
+    margin-right: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 50px;
+}
+.butt:hover{
+    background-color: #4e7779;
+    color: white; 
+}
+
+.activityList:hover{
+    color: #4e7779;
+    font-weight: bold;
+    cursor: pointer;
+}
